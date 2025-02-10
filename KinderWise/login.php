@@ -24,7 +24,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 <body>
     <div class="logo">
-        <img src="logo.png" alt="KinderWise Logo" width="150px">
+        <img src="./pics/logo.png" alt="KinderWise Logo" width="150px">
     </div>
     <div class="container">
         <h1>Login as <?php echo ucfirst($role); ?></h1> <!-- ucfirst() use to capitalized first character -->
