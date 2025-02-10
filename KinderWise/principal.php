@@ -93,6 +93,10 @@ include("connection.php");
             transition: 0.3s;
         }
 
+        .navbar a button:hover {
+            background-color: #3b5fc9;
+        }
+
         a:link { text-decoration: none; }
 
         a:visited { text-decoration: none; }
