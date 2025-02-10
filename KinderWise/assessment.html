@@ -1,0 +1,492 @@
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    display: flex;
+    min-height: 200vh;
+  }
+  .container {
+    display: flex;
+    width: 100%;
+  }
+  .sidebar {
+    width: 250px;
+    background: white;
+    padding: 20px;
+  }
+
+  .logo img {
+    width: 200px;
+  }
+
+  .sidebar ul {
+    list-style: none;
+    padding: 0;
+  }
+  .sidebar ul li {
+    margin: 15px 0;
+  }
+
+  .settings,
+  .logout{
+    width: 250px;
+    height: 60px; 
+    margin-bottom: 10px;
+    border:0;
+    background-color: white;
+    text-align: left;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 15px;
+  }
+
+  .settings:hover,
+  .logout:hover{
+    background-color: #dee8ff;
+  }
+
+  /* dashboard */
+  .dashboard{
+    background-color: #4780ff;
+    color: white;
+    border:0;
+    border-radius: 5px;
+    width: 180px;
+    height: 35px;
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+  }
+
+  .section-title {
+      color:rgb(138, 136, 136);
+      font-size: 10px;
+      text-align: left;
+      padding-top: 10px;
+      padding-left: 10px;
+      margin-bottom: 5px;
+  }
+
+  ul button{
+    width: 250px;
+    height: 60px; 
+    margin-bottom: 10px;
+    border:0;
+    background-color: white;
+    text-align: left;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 15px;
+  }
+
+  a:link, 
+  a:visited,
+  a:hover {
+    color: rgb(52, 51, 51);
+  }
+
+  ul button:hover {
+    background-color: #dee8ff;
+  }
+
+  .selected-pg{
+    background-color: #dee8ff;
+  }
+
+  a{
+    text-decoration:none;
+  }
+
+  .content {
+    flex: 1;
+    padding: 20px;
+  }
+
+  .main-content{
+    flex-grow: 1;
+    width: 100%;
+    min-height: 100vh;
+    padding-left: 40;
+    padding-right: 40;
+    padding-top: 30;
+    background-color: #f5f8fb;
+  }
+
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
+  }
+  .badge {
+    background: #ffcccc;
+    padding: 5px 10px;
+    border-radius: 5px;
+  }
+  .profile {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+
+  h1{
+    font-size: 28px;
+  }
+
+  .class-name{
+    width: 50px;
+    height: 25px;
+    text-align: center;
+    font-weight: bold;
+    border-radius: 5px;
+    border: 0;
+    background-color: #f2d5ff;
+    color:#dd46ff;
+    box-shadow: 2px 5px 4px rgba(84, 82, 82, 0.2);
+  }
+
+  /*filters*/
+  .filters { /*?*/
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+  }
+
+  .filter-table{
+    width: 100%;
+    border:1.5px solid #ddd;
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  
+  .filter-table td{
+    border-right: 1.5px solid #ddd;
+    padding: 20px;
+  }
+
+  .filter-table td:last-child{
+    border-right: 0;
+  }
+
+  .filter-tag,
+  .subject-filter,
+  .semester-filter,
+  .reset{
+    font-size: 14px
+  }
+
+  .subject-filter,
+  .semester-filter,
+  .reset{
+    border: 0;
+    background-color: #f5f8fb;
+  }
+
+  .reset{
+    cursor: pointer;
+    color: #d52753;
+  }
+
+  /*assessment table*/
+  table { 
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0 10px;
+    /* margin-top: 5px; */
+  }
+
+  thead{
+    border-bottom: 1px solid #91a8d1;
+  }
+
+  th,
+  td {
+    padding: 40px;
+    text-align: center;
+  }
+
+  th{
+    color: #778dca;
+  }
+
+  .assessment-row{
+    background-color: #f5f8fb;
+    border-radius: 15px;
+    /* border: 1px solid black; */
+  }
+
+  .title-btn{
+    font-size: 16;
+    /* width: 100px;
+    height: 50px; */
+    background-color: white;
+    border: 0;
+    cursor: pointer;
+  }
+
+  .assessment-type {
+    color: green;
+  }
+
+  .edit,
+  .delete {
+    padding: 5px 10px;
+    border: none;
+    cursor: pointer;
+    margin-left: 10px;
+  }
+  .edit {
+    background: white;
+    color: #778dca;
+    border:1px solid #778dca;
+    border-radius: 15px;
+    width: 80px;
+    height: 30px;
+    font-weight: bold;
+  }
+
+  .delete {
+    background: #91a8d1;
+    color: white;
+    border: 1px solid #778dca;
+    border-radius: 15px;
+    width: 80px;
+    height: 30px;
+    font-weight: bold;
+  }
+
+  .add {
+    background: #ffbc38;
+    color: white;
+    border: none;
+    border-radius: 15px;
+    box-shadow: 2px 5px 4px rgba(84, 82, 82, 0.2);
+    width: 70px;
+    height: 30px;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-left: 50px;
+    margin-top: 20px;
+  }
+</style>
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Assessment</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+
+    <div class="sidebar">
+      <div class="logo">
+            <img src="./pics/logo.png" alt="KinderWise Logo">
+      </div>
+      <button class="dashboard">Dashboard</button>
+      <br><br> 
+      <div class="section-title">PAGES</div>
+      <hr>
+      <nav>
+        <ul>
+          <button class="selected-pg"><a href="assessment.html">Assessment</a></button> <br>
+          <button><a href="">Grading</a></button> <br>
+          <button><a href="">Performance Report</a></button> <br>
+          <button><a href="">Announcement</a></button>
+        </ul>
+      </nav>
+      <br><br><hr>
+      <div class="bottom-links">
+        <button class="settings">⚙️ Settings</button><br><br>
+        <button class="logout">🚪 Logout</button>
+      </div>
+
+    </div>
+
+    <div class="main-content">
+
+      <header>
+        <span class="profile">👤 NGAN (Teacher)</span>
+      </header>
+      
+      <section>
+        <h1>Assessment</h1>
+        <input type="text" class="class-name" value="1 RED" size="2" disabled> <!--***tchr's class-->
+        <br><br>
+        <div class="filters">
+          <form action="assessment.php" method="POST" id="filter-form">
+            <table class="filter-table">
+              <tbody>
+                <tr>
+                  <td class="filter-tag">Filter By: </td>
+
+                  <td>
+                    <select class="subject-filter" name="subject">
+                      <option selected>All</option>
+                      <option>Bahasa Malaysia</option> 
+                      <option>Mandarin</option>
+                      <option>English</option>
+                      <option>Science</option>
+                      <option>Maths</option>
+                    </select>
+                  </td>
+                  
+                  <td>
+                    <select class="semester-filter" name="semester">
+                    <option selected>All</option>
+                    <option>1</option>
+                    <option>2</option>
+                    </select>
+                  </td>
+                
+                  <td><input class="reset" type="reset" value="Reset Filter"></td>
+                </tr>
+              </tbody>  
+            </table>
+          </form>
+        </div>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Subject</th>
+              <th>Semester</th>
+              <th>Assessment</th>
+              <th>Posted on</th>
+              <th></th>
+            </tr>
+          </thead>
+        
+          <tbody id="assessment-list">
+            <!--loaded using script-->
+          </tbody>
+        </table>
+        <button class="add">+</button>
+      </section>
+    </div>
+  </body>
+
+  <script>
+    // when document loaded
+    document.addEventListener('DOMContentLoaded', function() {
+
+      filterAssessments(); // load assessments
+
+      // filters
+      document.querySelector('.subject-filter').addEventListener('change', filterAssessments); // subject
+      document.querySelector('.semester-filter').addEventListener('change', filterAssessments); // semester
+      
+      // reset button ????
+      document.querySelector('input[type="reset"]').addEventListener('click', function() {
+        setTimeout(filterAssessments, 0); // run after form reset completes
+      });
+
+      // // assessment buttons
+      // const assessmentBtns = document.querySelectorAll('.title-btn');
+      // assessmentBtns.forEach(button => {
+      //   button.addEventListener('click', function(){
+      //     const assessmentID = this.getAttribute('data-id');
+      //     location.href = "viewAssessment.html?id=" + assessmentID;
+      //   });
+      // });
+
+      // // edit button
+      // const editButtons = document.querySelectorAll('.edit'); // get all edit btns
+      // editButtons.forEach(button => {
+      //   button.addEventListener('click', function(){ // add event listener for each edit btn
+      //     const assessmentID = this.getAttribute('data-id'); // get assessment id associated with clicked edit btn
+      //     location.href = "editAssessment.html?id=" + assessmentID;
+      //   });
+      // });
+
+      // dashboard button
+      document.querySelector('.dashboard').addEventListener('click', function(){
+        location.href = "teacher.html";
+      })
+    });
+
+    // called when filter is selected
+    function filterAssessments() {
+      var form = document.getElementById("filter-form"); // get the form element
+      var formData = new FormData(form); // get form data
+      formData.append('action', 'filter'); // specify which function to call
+
+      // fetch the php file and pass the form data as url parameters (?)
+      fetch("assessment.php?", { //+ new URLSearchParams(formData).toString(), 
+        method: 'POST',
+        body: formData
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.text();
+      })
+      .then(data => { // data = response in text from previous lines (?)
+        document.getElementById("assessment-list").innerHTML = data; // update assessment table in html
+
+        // setup edit buttons
+        const editButtons = document.querySelectorAll('.edit');
+        editButtons.forEach(button => {
+          button.addEventListener('click', function(){  // reattach event listeners to edit buttons
+            const assessmentID = this.getAttribute('data-id');
+            location.href = "editAssessment.html?id=" + assessmentID;
+          });
+        });
+
+        // setup assessment buttons
+        const assessmentBtns = document.querySelectorAll('.title-btn');
+        assessmentBtns.forEach(button => {
+          button.addEventListener('click', function(){ // reattach event listeners to title buttons
+            const assessmentID = this.getAttribute('data-id');
+            location.href = "viewAssessment.html?id=" + assessmentID;
+          });
+        });
+
+        // delete button
+        const deleteBtns = document.querySelectorAll('.delete');
+        deleteBtns.forEach(button => {
+          button.addEventListener('click', deleteAssessment);
+        });
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+
+      return false; // prevent form submission
+    }
+
+    function deleteAssessment()
+    {
+      const id = this.getAttribute('data-id');
+      let confirmation = confirm("Are you sure you want to delete this?");
+      if (confirmation) {
+        const formData = new FormData();
+        formData.append('action', 'delete');
+        formData.append('id', id);
+        fetch('assessment.php?', {
+          method: 'POST',
+          body: formData
+        })
+        .then(response => response.json())
+        .then(result => {
+          if(result.success)
+          {
+            alert('Assessment deleted successfully');
+            window.location.href = 'assessment.html';
+          }
+          else
+            alert('Failed to update assessment');
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          alert('Error saving assessment');
+        });
+      }
+    }
+  </script>
+</html>
