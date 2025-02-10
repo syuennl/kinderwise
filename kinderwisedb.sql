@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 09, 2025 at 10:54 PM
+-- Generation Time: Feb 10, 2025 at 07:24 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -72,6 +72,13 @@ CREATE TABLE `assessment` (
   `deadline` date DEFAULT NULL,
   `status` varchar(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `assessment`
+--
+
+INSERT INTO `assessment` (`assessmentTitle`, `assessmentType`, `teacherID`, `subjectName`, `semesterCode`, `yearCode`, `description`, `deadline`, `status`) VALUES
+('English Midterm', 'Midterm', 1, 'English Y1', 'Sem1Y1', 'Year1 ', 'english midterm', '2025-03-01', 'unverified');
 
 -- --------------------------------------------------------
 
@@ -234,6 +241,17 @@ CREATE TABLE `result` (
   `assessmentTitle` varchar(50) NOT NULL,
   `finalScore` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `result`
+--
+
+INSERT INTO `result` (`studentID`, `assessmentTitle`, `finalScore`) VALUES
+(1, 'English Midterm', 80),
+(2, 'English Midterm', 40),
+(3, 'English Midterm', 90),
+(4, 'English Midterm', 100),
+(5, 'English Midterm', 80);
 
 -- --------------------------------------------------------
 
