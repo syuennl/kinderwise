@@ -139,7 +139,6 @@ include("connection.php");
             padding: 20px 50px;
         }
 
-        /* New styles for the tracking page */
         .class-info {
             background: white;
             padding: 20px;
