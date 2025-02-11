@@ -152,9 +152,33 @@ include("connection.php");
         }
 
         .filters {
+            width: 100%;
             display: flex;
             gap: 10px;
             margin-bottom: 20px;
+            align-items: center;
+        }
+
+        .filters select {
+            flex: 1;
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            max-width: 200px; /* Prevents selects from getting too wide */
+        }
+
+        .filters button {
+            padding: 8px 15px;
+            background-color: #557FF7;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            height: 35px; /* Matches the height of select elements */
+        }
+
+        .filters button:hover {
+            background-color: #3b5fc9;
         }
 
         .result-box {
