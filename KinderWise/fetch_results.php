@@ -34,7 +34,7 @@ try {
     $sql = "SELECT r.finalScore 
             FROM result r 
             JOIN student s ON r.studentID = s.studentID 
-            JOIN assessment a ON r.assessmentTitle = a.assessmentTitle 
+            JOIN assessment a ON r.assessmentID = a.assessmentID 
             WHERE s.classCode = ? 
             AND a.subjectName = ? 
             AND a.assessmentType = ?";
