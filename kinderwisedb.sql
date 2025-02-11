@@ -69,6 +69,7 @@ CREATE TABLE `assessment` (
   `semesterCode` varchar(20) DEFAULT NULL,
   `yearCode` varchar(20) DEFAULT NULL,
   `description` varchar(300) DEFAULT NULL,
+  `postedOn` date DEFAULT NULL,
   `deadline` date DEFAULT NULL,
   `status` varchar(20) DEFAULT 'no submission'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -78,11 +79,11 @@ CREATE TABLE `assessment` (
 --
 
 INSERT INTO `assessment` (`assessmentID`, `assessmentType`, `teacherID`, `subjectName`, `semesterCode`, `yearCode`, `description`, `deadline`, `status`) VALUES
-(1, 'Finals', 1, 'English Y1', 'Sem2Y1', 'Year1 ', 'English Year 1 Sem 2 Finals', '2025-10-08', 'no submission'),
-(2, 'Finals', 1, 'Mandarin Y1', 'Sem2Y1', 'Year1 ', 'Mandarin Year 1 Sem 2 Finals', '2025-10-01', 'no submission'),
-(3, 'Midterm', 1, 'Science Y1', 'Sem1Y1', 'Year1 ', 'Science Year 1 Sem 1 Midterm', '2025-03-28', 'no submission'),
-(4, 'Midterm', 1, 'English Y1', 'Sem1Y1', 'Year1 ', 'English Year 1 Sem 1 Midterm', '2025-02-14', 'no submission'),
-(5, 'Midterm', 1, 'Mathematics Y1', 'Sem1Y1', 'Year1 ', 'Mathematics Year 1 Sem 1 Midterm', '2025-01-24', 'no submission');
+(1, 'Finals', 1, 'English Y1', 'Sem2Y1', 'Year1 ', 'English Year 1 Sem 2 Finals', '2025-08-01', '2025-10-08', 'no submission'),
+(2, 'Finals', 1, 'Mandarin Y1', 'Sem2Y1', 'Year1 ', 'Mandarin Year 1 Sem 2 Finals', '2025-07-23', '2025-10-01', 'no submission'),
+(3, 'Midterm', 1, 'Science Y1', 'Sem1Y1', 'Year1 ', 'Science Year 1 Sem 1 Midterm', '2025-02-11', '2025-03-28', 'no submission'),
+(4, 'Midterm', 1, 'English Y1', 'Sem1Y1', 'Year1 ', 'English Year 1 Sem 1 Midterm', '2025-01-15', '2025-02-14', 'no submission'),
+(5, 'Midterm', 1, 'Mathematics Y1', 'Sem1Y1', 'Year1 ', 'Mathematics Year 1 Sem 1 Midterm', '2025-01-03', '2025-01-24', 'no submission');
 
 -- --------------------------------------------------------
 
