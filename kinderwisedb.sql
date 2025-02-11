@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 11, 2025 at 10:21 AM
+-- Generation Time: Feb 11, 2025 at 5:42 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -242,8 +242,8 @@ INSERT INTO `principal` (`principleID`, `name`, `email`, `contactNumber`, `passw
 
 CREATE TABLE `result` (
   `finalScore` int(11) DEFAULT NULL,
-  `studentID` int(11) DEFAULT NULL,
-  `assessmentID` int(11) DEFAULT NULL,
+  `studentID` int(11) NOT NULL,
+  `assessmentID` int(11) NOT NULL,
   `status` varchar(20) DEFAULT 'unverified' CHECK (`status` in ('verified','unverified'))
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -254,7 +254,7 @@ CREATE TABLE `result` (
 INSERT INTO `result` (`finalScore`, `studentID`, `assessmentID`, `status`) VALUES
 (80, 1, 3, 'unverified'),
 (40, 2, 3, 'unverified'),
-(90, 4, 3, 'unverified'),
+(90, 3, 3, 'unverified'),
 (100, 4, 3, 'unverified'),
 (80, 5, 3, 'unverified');
 
@@ -521,8 +521,8 @@ ALTER TABLE `principal`
 -- Indexes for table `result`
 --
 ALTER TABLE `result`
-  ADD KEY `fk_result_assessment` (`assessmentID`),
-  ADD KEY `fk_result_student` (`studentID`);
+  ADD PRIMARY KEY (`studentID`,`assessmentID`),
+  ADD KEY `fk_result_assessment` (`assessmentID`);
 
 --
 -- Indexes for table `semester`
