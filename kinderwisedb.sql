@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 10, 2025 at 07:24 PM
+-- Generation Time: Feb 11, 2025 at 10:21 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -62,7 +62,7 @@ CREATE TABLE `announcement` (
 --
 
 CREATE TABLE `assessment` (
-  `assessmentTitle` varchar(50) NOT NULL,
+  `assessmentID` int(11) NOT NULL,
   `assessmentType` varchar(30) DEFAULT NULL,
   `teacherID` int(11) DEFAULT NULL,
   `subjectName` varchar(50) DEFAULT NULL,
@@ -70,15 +70,19 @@ CREATE TABLE `assessment` (
   `yearCode` varchar(20) DEFAULT NULL,
   `description` varchar(300) DEFAULT NULL,
   `deadline` date DEFAULT NULL,
-  `status` varchar(20) DEFAULT NULL
+  `status` varchar(20) DEFAULT 'no submission'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `assessment`
 --
 
-INSERT INTO `assessment` (`assessmentTitle`, `assessmentType`, `teacherID`, `subjectName`, `semesterCode`, `yearCode`, `description`, `deadline`, `status`) VALUES
-('English Midterm', 'Midterm', 1, 'English Y1', 'Sem1Y1', 'Year1 ', 'english midterm', '2025-03-01', 'unverified');
+INSERT INTO `assessment` (`assessmentID`, `assessmentType`, `teacherID`, `subjectName`, `semesterCode`, `yearCode`, `description`, `deadline`, `status`) VALUES
+(1, 'Finals', 1, 'English Y1', 'Sem2Y1', 'Year1 ', 'English Year 1 Sem 2 Finals', '2025-10-08', 'no submission'),
+(2, 'Finals', 1, 'Mandarin Y1', 'Sem2Y1', 'Year1 ', 'Mandarin Year 1 Sem 2 Finals', '2025-10-01', 'no submission'),
+(3, 'Midterm', 1, 'Science Y1', 'Sem1Y1', 'Year1 ', 'Science Year 1 Sem 1 Midterm', '2025-03-28', 'no submission'),
+(4, 'Midterm', 1, 'English Y1', 'Sem1Y1', 'Year1 ', 'English Year 1 Sem 1 Midterm', '2025-02-14', 'no submission'),
+(5, 'MIdterm', 1, 'Mathematics Y1', 'Sem1Y1', 'Year1 ', 'Mathematics Year 1 Sem 1 Midterm', '2025-01-24', 'no submission');
 
 -- --------------------------------------------------------
 
@@ -237,21 +241,22 @@ INSERT INTO `principal` (`principleID`, `name`, `email`, `contactNumber`, `passw
 --
 
 CREATE TABLE `result` (
-  `studentID` int(11) NOT NULL,
-  `assessmentTitle` varchar(50) NOT NULL,
-  `finalScore` int(11) DEFAULT NULL
+  `finalScore` int(11) DEFAULT NULL,
+  `studentID` int(11) DEFAULT NULL,
+  `assessmentID` int(11) DEFAULT NULL,
+  `status` varchar(20) DEFAULT 'unverified' CHECK (`status` in ('verified','unverified'))
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `result`
 --
 
-INSERT INTO `result` (`studentID`, `assessmentTitle`, `finalScore`) VALUES
-(1, 'English Midterm', 80),
-(2, 'English Midterm', 40),
-(3, 'English Midterm', 90),
-(4, 'English Midterm', 100),
-(5, 'English Midterm', 80);
+INSERT INTO `result` (`finalScore`, `studentID`, `assessmentID`, `status`) VALUES
+(80, 1, 3, 'unverified'),
+(40, 2, 3, 'unverified'),
+(90, 4, 3, 'unverified'),
+(100, 4, 3, 'unverified'),
+(80, 5, 3, 'unverified');
 
 -- --------------------------------------------------------
 
@@ -486,7 +491,7 @@ ALTER TABLE `announcement`
 -- Indexes for table `assessment`
 --
 ALTER TABLE `assessment`
-  ADD PRIMARY KEY (`assessmentTitle`),
+  ADD PRIMARY KEY (`assessmentID`),
   ADD KEY `fk_assessment_teacher` (`teacherID`),
   ADD KEY `fk_assessment_subject` (`subjectName`),
   ADD KEY `fk_assessment_semester` (`semesterCode`),
@@ -516,8 +521,8 @@ ALTER TABLE `principal`
 -- Indexes for table `result`
 --
 ALTER TABLE `result`
-  ADD PRIMARY KEY (`studentID`,`assessmentTitle`),
-  ADD KEY `fk_result_assessment` (`assessmentTitle`);
+  ADD KEY `fk_result_assessment` (`assessmentID`),
+  ADD KEY `fk_result_student` (`studentID`);
 
 --
 -- Indexes for table `semester`
@@ -564,6 +569,12 @@ ALTER TABLE `year`
 --
 ALTER TABLE `administrator`
   MODIFY `administratorID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `assessment`
+--
+ALTER TABLE `assessment`
+  MODIFY `assessmentID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `parent`
@@ -619,7 +630,7 @@ ALTER TABLE `class`
 -- Constraints for table `result`
 --
 ALTER TABLE `result`
-  ADD CONSTRAINT `fk_result_assessment` FOREIGN KEY (`assessmentTitle`) REFERENCES `assessment` (`assessmentTitle`),
+  ADD CONSTRAINT `fk_result_assessment` FOREIGN KEY (`assessmentID`) REFERENCES `assessment` (`assessmentID`),
   ADD CONSTRAINT `fk_result_student` FOREIGN KEY (`studentID`) REFERENCES `student` (`studentID`);
 
 --
