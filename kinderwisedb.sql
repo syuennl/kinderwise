@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 11, 2025 at 09:00 PM
+-- Generation Time: Feb 11, 2025 at 03:08 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -31,7 +31,7 @@ CREATE TABLE `administrator` (
   `administratorID` int(11) NOT NULL,
   `name` varchar(50) DEFAULT NULL,
   `email` varchar(100) DEFAULT NULL,
-  `contactNumber` varchar(20) DEFAULT NULL,
+  `contactNumber` varchar(11) DEFAULT NULL,
   `password` varchar(8) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -40,9 +40,7 @@ CREATE TABLE `administrator` (
 --
 
 INSERT INTO `administrator` (`administratorID`, `name`, `email`, `contactNumber`, `password`) VALUES
-(1, 'Kuan Chee Ling', 'kuancheeling@kinderwise.com', '01165571024', 'admin123'),
-(2, 'Song Ya Xuan', 'songyaxuan@kinderwise.com', '110304520', 'ygv'),
-(3, 'Song Ya Xuan', 'songyaxuan@kinderwise.com', '110304520', 'swsws');
+(1, 'Kuan Chee Ling', 'kuancheeling@kinderwise.com', '01165571024', 'admin123');
 
 -- --------------------------------------------------------
 
@@ -112,13 +110,13 @@ INSERT INTO `class` (`classCode`, `teacherID`, `yearCode`, `classCapacity`) VALU
 ('GreenY3', 6, 'Year3', 5),
 ('PurpleY1', 7, 'Year1 ', 5),
 ('PurpleY2', 8, 'Year2', 5),
-('PurpleY3', 9, 'Year3', 5),
+('PurpleY3', NULL, 'Year3', NULL),
 ('RedY1', 10, 'Year1 ', 5),
 ('RedY2', 11, 'Year2', 5),
 ('RedY3', 12, 'Year3', 5),
 ('YellowY1', 13, 'Year1 ', 5),
 ('YellowY2', 14, 'Year2', 5),
-('YellowY3', 15, 'Year3', 5);
+('YellowY3', 9, 'Year3', 5);
 
 -- --------------------------------------------------------
 
@@ -130,7 +128,7 @@ CREATE TABLE `parent` (
   `parentID` int(11) NOT NULL,
   `name` varchar(50) DEFAULT NULL,
   `email` varchar(100) DEFAULT NULL,
-  `contactNumber` varchar(20) DEFAULT NULL,
+  `contactNumber` varchar(11) DEFAULT NULL,
   `password` varchar(8) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -208,12 +206,7 @@ INSERT INTO `parent` (`parentID`, `name`, `email`, `contactNumber`, `password`) 
 (67, 'Khairul Anwar', 'khairul.a@kinderwise.com', '0123456802', 'khair123'),
 (68, 'Siva Raman', 'siva.r@kinderwise.com', '0134567896', 'siva1234'),
 (69, 'Yong Ah Moi', 'ah.moi@kinderwise.com', '0198765437', 'yong1234'),
-(70, 'Ismail Abdullah', 'ismail.a@kinderwise.com', '0145678917', 'ismail12'),
-(71, 'Ganesh Muthu', 'ganesh.m@kinderwise.com', '0111234572', 'ganesh12'),
-(72, 'Mohd Faizal', 'faizal.m@kinderwise.com', '0123789461', 'faizal12'),
-(73, 'Priya Devi', 'priya.d@kinderwise.com', '0139876548', 'priya123'),
-(74, 'Zainuddin', 'zain.m@kinderwise.com', '0198234572', 'zain1234'),
-(75, 'Nur Azizah', 'azizah.n@kinderwise.com', '0114567895', 'azizah12');
+(70, 'Ismail Abdullah', 'ismail.a@kinderwise.com', '0145678917', 'ismail12');
 
 -- --------------------------------------------------------
 
@@ -225,7 +218,7 @@ CREATE TABLE `principal` (
   `principleID` int(11) NOT NULL,
   `name` varchar(50) DEFAULT NULL,
   `email` varchar(100) DEFAULT NULL,
-  `contactNumber` varchar(20) DEFAULT NULL,
+  `contactNumber` varchar(11) DEFAULT NULL,
   `password` varchar(8) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -376,12 +369,7 @@ INSERT INTO `student` (`studentID`, `name`, `age`, `birthday`, `gender`, `parent
 (67, 'Anwar Danish', 6, '2018-04-20', 'Male', 67, 'GreenY3', 'Year3'),
 (68, 'Raman Darshan', 6, '2018-06-28', 'Male', 68, 'GreenY3', 'Year3'),
 (69, 'Ah Moi Lin', 6, '2018-08-15', 'Female', 69, 'GreenY3', 'Year3'),
-(70, 'Abdullah Aisha', 6, '2018-10-22', 'Female', 70, 'GreenY3', 'Year3'),
-(71, 'Muthu Karthik', 6, '2018-01-28', 'Male', 71, 'PurpleY3', 'Year3'),
-(72, 'Faizal Iman', 6, '2018-03-15', 'Male', 72, 'PurpleY3', 'Year3'),
-(73, 'Devi Tanvi', 6, '2018-05-22', 'Female', 73, 'PurpleY3', 'Year3'),
-(74, 'Zainuddin Imran', 6, '2018-07-30', 'Male', 74, 'PurpleY3', 'Year3'),
-(75, 'Azizah Nur', 6, '2018-09-25', 'Female', 75, 'PurpleY3', 'Year3');
+(70, 'Abdullah Aisha', 6, '2018-10-22', 'Female', 70, 'GreenY3', 'Year3');
 
 -- --------------------------------------------------------
 
@@ -425,7 +413,7 @@ CREATE TABLE `teacher` (
   `teacherID` int(11) NOT NULL,
   `name` varchar(50) DEFAULT NULL,
   `email` varchar(100) DEFAULT NULL,
-  `contactNumber` varchar(20) DEFAULT NULL,
+  `contactNumber` varchar(11) DEFAULT NULL,
   `password` varchar(8) DEFAULT NULL,
   `classAssigned` varchar(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -443,13 +431,13 @@ INSERT INTO `teacher` (`teacherID`, `name`, `email`, `contactNumber`, `password`
 (6, 'Chong Wei Han', 'chong.weihan@kinderwise.com', '0145623145', 'weihan88', 'GreenY3'),
 (7, 'Siti Farhana', 'siti.farhana@kinderwise.co', '0117845623', 'siti0008', 'PurpleY1'),
 (8, 'Ravi Kumar', 'ravi.kumar@kinderwise.com', '0124789563', 'ravi4321', 'PurpleY2'),
-(9, 'Tan Jia Ying', 'tan.jiaying@kinderwise.com', '0136987452', 'jiaying7', 'PurpleY3'),
+(9, 'Tan Jia Ying', 'tan.jiaying@kinderwise.com', '0136987452', 'jiaying7', 'YellowY3'),
 (10, 'Amirul Hakim', 'amirul.hakim@kinderwise.com', '0112365987', 'amirul22', 'RedY1'),
 (11, 'Divya Menon', 'divya.menon@kinderwise.com', '0123256987', 'divya999', 'RedY2'),
 (12, 'Goh Yi Ting', 'goh.yiting@kinderwise.com', '0145698741', 'yiting45', 'RedY3'),
 (13, 'Roslan Hafeez', 'roslan.hafeez@kinderwise.com', '0102587963', 'roslan77', 'YellowY1'),
 (14, 'Selvi Arumugam', 'selvi.arumugam@kinderwise.com', '01147852136', 'selvi888', 'YellowY2'),
-(15, 'Ong Wei Jie', 'ong.weijie@kinderwise.com', '0123654789', 'weijie12', 'YellowY3');
+(15, 'Ong Wei Jie', 'ong.weijie@kinderwise.com', '0123654789', 'weijie12', NULL);
 
 -- --------------------------------------------------------
 
@@ -469,8 +457,7 @@ CREATE TABLE `year` (
 INSERT INTO `year` (`yearCode`, `description`) VALUES
 ('Year1 ', 'Foundational learning with basic skills.'),
 ('Year2', 'Building on basics and simple explorations.'),
-('Year3', 'Advanced concepts and structured learning.'),
-('Year4', '3dwed');
+('Year3', 'Advanced concepts and structured learning.');
 
 --
 -- Indexes for dumped tables
@@ -570,7 +557,7 @@ ALTER TABLE `year`
 -- AUTO_INCREMENT for table `administrator`
 --
 ALTER TABLE `administrator`
-  MODIFY `administratorID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `administratorID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `assessment`
