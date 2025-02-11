@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 11, 2025 at 03:08 PM
+-- Generation Time: Feb 11, 2025 at 03:16 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -436,8 +436,7 @@ INSERT INTO `teacher` (`teacherID`, `name`, `email`, `contactNumber`, `password`
 (11, 'Divya Menon', 'divya.menon@kinderwise.com', '0123256987', 'divya999', 'RedY2'),
 (12, 'Goh Yi Ting', 'goh.yiting@kinderwise.com', '0145698741', 'yiting45', 'RedY3'),
 (13, 'Roslan Hafeez', 'roslan.hafeez@kinderwise.com', '0102587963', 'roslan77', 'YellowY1'),
-(14, 'Selvi Arumugam', 'selvi.arumugam@kinderwise.com', '01147852136', 'selvi888', 'YellowY2'),
-(15, 'Ong Wei Jie', 'ong.weijie@kinderwise.com', '0123654789', 'weijie12', NULL);
+(14, 'Selvi Arumugam', 'selvi.arumugam@kinderwise.com', '01147852136', 'selvi888', 'YellowY2');
 
 -- --------------------------------------------------------
 
