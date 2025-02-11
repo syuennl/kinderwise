@@ -139,6 +139,13 @@ include("connection.php");
             padding: 20px 50px;
         }
 
+        .filters {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            align-items: center;
+        }
+
         .class-info {
             background: white;
             padding: 20px;
