@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 11, 2025 at 03:16 PM
+-- Generation Time: Feb 11, 2025 at 05:15 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -79,11 +79,13 @@ CREATE TABLE `assessment` (
 --
 
 INSERT INTO `assessment` (`assessmentID`, `assessmentType`, `teacherID`, `subjectName`, `semesterCode`, `yearCode`, `description`, `postedOn`, `deadline`, `status`) VALUES
-(1, 'Finals', 1, 'English Y1', 'Sem2Y1', 'Year1 ', 'English Year 1 Sem 2 Finals', '2025-08-01', '2025-10-08', 'no submission'),
-(2, 'Finals', 1, 'Mandarin Y1', 'Sem2Y1', 'Year1 ', 'Mandarin Year 1 Sem 2 Finals', '2025-07-23', '2025-10-01', 'no submission'),
-(3, 'Midterm', 1, 'Science Y1', 'Sem1Y1', 'Year1 ', 'Science Year 1 Sem 1 Midterm', '2025-02-11', '2025-03-28', 'no submission'),
-(4, 'Midterm', 1, 'English Y1', 'Sem1Y1', 'Year1 ', 'English Year 1 Sem 1 Midterm', '2025-01-15', '2025-02-14', 'no submission'),
-(5, 'Midterm', 1, 'Mathematics Y1', 'Sem1Y1', 'Year1 ', 'Mathematics Year 1 Sem 1 Midterm', '2025-01-03', '2025-01-24', 'no submission');
+(1, 'Finals', 1, 'English Y1', 'Sem2Y1', 'Year1 ', 'English Year 1 Sem 2 Finals', '2025-10-08', '2025-08-01', 'no submission'),
+(2, 'Finals', 1, 'Mandarin Y1', 'Sem2Y1', 'Year1 ', 'Mandarin Year 1 Sem 2 Finals', '2025-10-01', '2025-07-23', 'no submission'),
+(3, 'Midterm', 1, 'Science Y1', 'Sem1Y1', 'Year1 ', 'Science Year 1 Sem 1 Midterm', '2025-03-28', '2025-02-11', 'no submission'),
+(4, 'Midterm', 1, 'English Y1', 'Sem1Y1', 'Year1 ', 'English Year 1 Sem 1 Midterm', '2025-02-14', '2025-01-15', 'no submission'),
+(5, 'Midterm', 1, 'Mathematics Y1', 'Sem1Y1', 'Year1 ', 'Mathematics Year 1 Sem 1 Midterm', '2025-01-24', '2025-01-03', 'no submission'),
+(6, 'Midterm', 1, 'Mandarin Y1', 'Sem1Y1', 'Year1 ', 'Mandarin Year 1 Sem 1 Midterm', '2025-02-01', '2025-03-26', 'no submission'),
+(7, 'Midterm', 1, 'Bahasa Malaysia Y1', 'Sem1Y1', 'Year1 ', 'Bahasa Malaysia Year 1 Sem 1 Midterm', '2025-02-01', '2025-03-27', 'no submission');
 
 -- --------------------------------------------------------
 
@@ -249,6 +251,10 @@ CREATE TABLE `result` (
 
 INSERT INTO `result` (`finalScore`, `studentID`, `assessmentID`, `status`) VALUES
 (80, 1, 3, 'unverified'),
+(100, 1, 4, 'unverified'),
+(99, 1, 5, 'unverified'),
+(80, 1, 6, 'unverified'),
+(86, 1, 7, 'unverified'),
 (40, 2, 3, 'unverified'),
 (90, 3, 3, 'unverified'),
 (100, 4, 3, 'unverified'),
@@ -563,7 +569,7 @@ ALTER TABLE `administrator`
 -- AUTO_INCREMENT for table `assessment`
 --
 ALTER TABLE `assessment`
-  MODIFY `assessmentID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `assessmentID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `parent`
