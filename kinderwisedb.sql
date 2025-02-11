@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 11, 2025 at 05:15 PM
+-- Generation Time: Feb 11, 2025 at 05:28 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -256,9 +256,25 @@ INSERT INTO `result` (`finalScore`, `studentID`, `assessmentID`, `status`) VALUE
 (80, 1, 6, 'unverified'),
 (86, 1, 7, 'unverified'),
 (40, 2, 3, 'unverified'),
+(80, 2, 4, 'unverified'),
+(40, 2, 5, 'unverified'),
+(80, 2, 6, 'unverified'),
+(86, 2, 7, 'unverified'),
 (90, 3, 3, 'unverified'),
+(90, 3, 4, 'unverified'),
+(99, 3, 5, 'unverified'),
+(80, 3, 6, 'unverified'),
+(86, 3, 7, 'unverified'),
 (100, 4, 3, 'unverified'),
-(80, 5, 3, 'unverified');
+(100, 4, 4, 'unverified'),
+(99, 4, 5, 'unverified'),
+(80, 4, 6, 'unverified'),
+(86, 4, 7, 'unverified'),
+(80, 5, 3, 'unverified'),
+(80, 5, 4, 'unverified'),
+(99, 5, 5, 'unverified'),
+(80, 5, 6, 'unverified'),
+(86, 5, 7, 'unverified');
 
 -- --------------------------------------------------------
 
@@ -569,7 +585,7 @@ ALTER TABLE `administrator`
 -- AUTO_INCREMENT for table `assessment`
 --
 ALTER TABLE `assessment`
-  MODIFY `assessmentID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8,
+  MODIFY `assessmentID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
   MODIFY `postedOn` TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
 
 --
