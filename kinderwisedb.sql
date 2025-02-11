@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 11, 2025 at 5:42 PM
+-- Generation Time: Feb 11, 2025 at 09:00 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -40,7 +40,9 @@ CREATE TABLE `administrator` (
 --
 
 INSERT INTO `administrator` (`administratorID`, `name`, `email`, `contactNumber`, `password`) VALUES
-(1, 'Kuan Chee Ling', 'kuancheeling@kinderwise.com', '01165571024', 'admin123');
+(1, 'Kuan Chee Ling', 'kuancheeling@kinderwise.com', '01165571024', 'admin123'),
+(2, 'Song Ya Xuan', 'songyaxuan@kinderwise.com', '110304520', 'ygv'),
+(3, 'Song Ya Xuan', 'songyaxuan@kinderwise.com', '110304520', 'swsws');
 
 -- --------------------------------------------------------
 
@@ -82,7 +84,7 @@ INSERT INTO `assessment` (`assessmentID`, `assessmentType`, `teacherID`, `subjec
 (2, 'Finals', 1, 'Mandarin Y1', 'Sem2Y1', 'Year1 ', 'Mandarin Year 1 Sem 2 Finals', '2025-10-01', 'no submission'),
 (3, 'Midterm', 1, 'Science Y1', 'Sem1Y1', 'Year1 ', 'Science Year 1 Sem 1 Midterm', '2025-03-28', 'no submission'),
 (4, 'Midterm', 1, 'English Y1', 'Sem1Y1', 'Year1 ', 'English Year 1 Sem 1 Midterm', '2025-02-14', 'no submission'),
-(5, 'MIdterm', 1, 'Mathematics Y1', 'Sem1Y1', 'Year1 ', 'Mathematics Year 1 Sem 1 Midterm', '2025-01-24', 'no submission');
+(5, 'Midterm', 1, 'Mathematics Y1', 'Sem1Y1', 'Year1 ', 'Mathematics Year 1 Sem 1 Midterm', '2025-01-24', 'no submission');
 
 -- --------------------------------------------------------
 
@@ -568,13 +570,13 @@ ALTER TABLE `year`
 -- AUTO_INCREMENT for table `administrator`
 --
 ALTER TABLE `administrator`
-  MODIFY `administratorID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `administratorID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `assessment`
 --
 ALTER TABLE `assessment`
-  MODIFY `assessmentID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `assessmentID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `parent`
@@ -598,7 +600,7 @@ ALTER TABLE `student`
 -- AUTO_INCREMENT for table `teacher`
 --
 ALTER TABLE `teacher`
-  MODIFY `teacherID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `teacherID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- Constraints for dumped tables
