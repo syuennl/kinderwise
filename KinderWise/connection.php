@@ -1,4 +1,3 @@
-<!-- connect php to database -->
 <?php 
     $servername = "localhost";
     $username = "root";
@@ -10,4 +9,4 @@
     }
     // echo "Successfully connected to database"; // check if connected successfully
     
-    ?>
+?>
