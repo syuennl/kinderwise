@@ -563,7 +563,8 @@ ALTER TABLE `administrator`
 -- AUTO_INCREMENT for table `assessment`
 --
 ALTER TABLE `assessment`
-  MODIFY `assessmentID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `assessmentID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6,
+  MODIFY `postedOn` TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
 
 --
 -- AUTO_INCREMENT for table `parent`
