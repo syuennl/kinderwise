@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 12, 2025 at 01:38 PM
+-- Generation Time: Feb 12, 2025 at 03:24 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -218,7 +218,7 @@ INSERT INTO `parent` (`parentID`, `name`, `email`, `contactNumber`, `password`) 
 --
 
 CREATE TABLE `principal` (
-  `principleID` int(11) NOT NULL,
+  `principalID` int(11) NOT NULL,
   `name` varchar(50) DEFAULT NULL,
   `email` varchar(100) DEFAULT NULL,
   `contactNumber` varchar(11) DEFAULT NULL,
@@ -229,7 +229,7 @@ CREATE TABLE `principal` (
 -- Dumping data for table `principal`
 --
 
-INSERT INTO `principal` (`principleID`, `name`, `email`, `contactNumber`, `password`) VALUES
+INSERT INTO `principal` (`principalID`, `name`, `email`, `contactNumber`, `password`) VALUES
 (1, 'Yap Sze Thin', 'yapszethin@email.com', '0108140417', 'szethin');
 
 -- --------------------------------------------------------
@@ -526,7 +526,7 @@ ALTER TABLE `parent`
 -- Indexes for table `principal`
 --
 ALTER TABLE `principal`
-  ADD PRIMARY KEY (`principleID`);
+  ADD PRIMARY KEY (`principalID`);
 
 --
 -- Indexes for table `result`
@@ -597,7 +597,7 @@ ALTER TABLE `parent`
 -- AUTO_INCREMENT for table `principal`
 --
 ALTER TABLE `principal`
-  MODIFY `principleID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `principalID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `student`
