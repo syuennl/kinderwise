@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 12, 2025 at 03:24 AM
+-- Generation Time: Feb 12, 2025 at 02:05 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -49,7 +49,8 @@ INSERT INTO `administrator` (`administratorID`, `name`, `email`, `contactNumber`
 --
 
 CREATE TABLE `announcement` (
-  `AnnoucementTitle` varchar(50) NOT NULL,
+  `announcementID` int(11) NOT NULL,
+  `announcementTitle` varchar(50) NOT NULL,
   `details` varchar(300) DEFAULT NULL,
   `postDate` date DEFAULT NULL,
   `teacherID` int(11) DEFAULT NULL
@@ -495,7 +496,7 @@ ALTER TABLE `administrator`
 -- Indexes for table `announcement`
 --
 ALTER TABLE `announcement`
-  ADD PRIMARY KEY (`AnnoucementTitle`),
+  ADD PRIMARY KEY (`announcementID`),
   ADD KEY `fk_announcement_teacher` (`teacherID`);
 
 --
