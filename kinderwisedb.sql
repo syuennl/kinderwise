@@ -240,6 +240,7 @@ INSERT INTO `principal` (`principalID`, `name`, `email`, `contactNumber`, `passw
 --
 
 CREATE TABLE `result` (
+  `resultID` int(11) NOT NULL,
   `finalScore` int(11) DEFAULT NULL,
   `studentID` int(11) NOT NULL,
   `assessmentID` int(11) NOT NULL,
@@ -250,32 +251,32 @@ CREATE TABLE `result` (
 -- Dumping data for table `result`
 --
 
-INSERT INTO `result` (`finalScore`, `studentID`, `assessmentID`, `status`) VALUES
-(80, 1, 3, 'unverified'),
-(100, 1, 4, 'unverified'),
-(99, 1, 5, 'unverified'),
-(80, 1, 6, 'unverified'),
-(86, 1, 7, 'unverified'),
-(40, 2, 3, 'unverified'),
-(80, 2, 4, 'unverified'),
-(40, 2, 5, 'unverified'),
-(80, 2, 6, 'unverified'),
-(86, 2, 7, 'unverified'),
-(90, 3, 3, 'unverified'),
-(90, 3, 4, 'unverified'),
-(99, 3, 5, 'unverified'),
-(80, 3, 6, 'unverified'),
-(86, 3, 7, 'unverified'),
-(100, 4, 3, 'unverified'),
-(100, 4, 4, 'unverified'),
-(99, 4, 5, 'unverified'),
-(80, 4, 6, 'unverified'),
-(86, 4, 7, 'unverified'),
-(80, 5, 3, 'unverified'),
-(80, 5, 4, 'unverified'),
-(99, 5, 5, 'unverified'),
-(80, 5, 6, 'unverified'),
-(86, 5, 7, 'unverified');
+INSERT INTO `result` (`resultID`, `finalScore`, `studentID`, `assessmentID`, `status`) VALUES
+(1, 80, 1, 3, 'unverified'),
+(2, 100, 1, 4, 'unverified'),
+(3, 99, 1, 5, 'unverified'),
+(4, 80, 1, 6, 'unverified'),
+(5, 86, 1, 7, 'unverified'),
+(6, 40, 2, 3, 'unverified'),
+(7, 80, 2, 4, 'unverified'),
+(8, 40, 2, 5, 'unverified'),
+(9, 80, 2, 6, 'unverified'),
+(10, 86, 2, 7, 'unverified'),
+(11, 90, 3, 3, 'unverified'),
+(12, 90, 3, 4, 'unverified'),
+(13, 99, 3, 5, 'unverified'),
+(14, 80, 3, 6, 'unverified'),
+(15, 86, 3, 7, 'unverified'),
+(16, 100, 4, 3, 'unverified'),
+(17, 100, 4, 4, 'unverified'),
+(18, 99, 4, 5, 'unverified'),
+(19, 80, 4, 6, 'unverified'),
+(20, 86, 4, 7, 'unverified'),
+(21, 80, 5, 3, 'unverified'),
+(22, 80, 5, 4, 'unverified'),
+(23, 99, 5, 5, 'unverified'),
+(24, 80, 5, 6, 'unverified'),
+(25, 86, 5, 7, 'unverified');
 
 -- --------------------------------------------------------
 
@@ -533,7 +534,7 @@ ALTER TABLE `principal`
 -- Indexes for table `result`
 --
 ALTER TABLE `result`
-  ADD PRIMARY KEY (`studentID`,`assessmentID`),
+  ADD PRIMARY KEY (`resultID`),
   ADD KEY `fk_result_assessment` (`assessmentID`);
 
 --
@@ -616,7 +617,11 @@ ALTER TABLE `teacher`
 --
 ALTER TABLE `announcement`
   MODIFY `announcementID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
-  
+
+-- AUTO_INCREMENT for table `result`
+--
+ALTER TABLE `result`
+  MODIFY `resultID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 --
 -- Constraints for dumped tables
 --
