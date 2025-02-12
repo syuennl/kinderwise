@@ -351,7 +351,6 @@ if ($hasResults && !empty($subjects)) {
             <img src="./pics/logo.png" alt="KinderWise Logo">
         </div>
         <div class="top-right-buttons">
-            <button>🔔 Notifications</button>
             <button>👤 Profile</button>
         </div>
     </header>
@@ -378,8 +377,7 @@ if ($hasResults && !empty($subjects)) {
                 <div class="divider"></div>
                 
                 <div class="bottom">
-                    <li>⚙️ Settings</li>
-                    <li>↩️ Logout</li>
+                    <li><a href="logout.php">↩️ Logout</a></li>
                 </div>
     
             </nav>
