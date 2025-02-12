@@ -4,6 +4,13 @@ include("connection.php");
 
 $student_name = $_GET['student_name']; 
 
+$classQuery = "SELECT classCode FROM student WHERE name = ?";
+$classStmt = $conn->prepare($classQuery);
+$classStmt->bind_param("s", $student_name);
+$classStmt->execute();
+$classResult = $classStmt->get_result();
+$studentClass = $classResult->fetch_assoc()['classCode'] ?? 'N/A';
+
 $query = "SELECT a.subjectName, r.finalScore, r.status, a.assessmentType FROM result r JOIN assessment a ON r.assessmentID = a.assessmentID WHERE r.studentID = (SELECT studentID FROM student WHERE name = ?) ORDER BY a.subjectName";
 $stmt = $conn->prepare($query);
 $stmt->bind_param("s", $student_name);
@@ -382,7 +389,7 @@ if ($hasResults && !empty($subjects)) {
             <h1>Academic Report</h1>
             <div class="student-info">
                 <h3 class="student-name"><?php echo $student_name; ?></h3>
-                <span class="student-class">1 RED</span>
+                <span class="student-class"><?php echo htmlspecialchars($studentClass); ?></span>
             </div>
 
             <div class="table-container <?php echo (!$hasResults) ? 'no-data-state' : ''; ?>">
