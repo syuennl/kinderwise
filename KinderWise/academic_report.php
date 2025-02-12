@@ -351,7 +351,7 @@ if ($hasResults && !empty($subjects)) {
             <img src="./pics/logo.png" alt="KinderWise Logo">
         </div>
         <div class="top-right-buttons">
-            <button>👤 Profile</button>
+            <button onclick="window.location.href='profile.php'">👤 Profile</button>
         </div>
     </header>
     
@@ -366,9 +366,9 @@ if ($hasResults && !empty($subjects)) {
                 
             
                 <div class="pages">
-                    <li><a href="parent.php"><div id="currentPage">📊 Academic Report</a></li>
-                    <li><a href="parent.php">⏱️ Assessment</a></li>
-                    <li><a href="parent.php">📝 Announcement</a></li>
+                    <li><a href="academic_report.php?student_name=<?php echo urlencode($student_name); ?>"><div id="currentPage">📊 Academic Report</a></li>
+                    <li><a href="view_assessment.php?student_name=<?php echo urlencode($student_name); ?>">⏱️ Assessment</a></li>
+                    <li><a href="view_announcement.php?student_name=<?php echo urlencode($student_name); ?>">📝 Announcement</a></li>
                     <br></br>
                     <br></br>
                     
