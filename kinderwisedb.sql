@@ -79,13 +79,13 @@ CREATE TABLE `assessment` (
 --
 
 INSERT INTO `assessment` (`assessmentID`, `assessmentType`, `teacherID`, `subjectName`, `semesterCode`, `yearCode`, `description`, `postedOn`, `deadline`, `status`) VALUES
-(1, 'Finals', 1, 'English Y1', 'Sem2Y1', 'Year1 ', 'English Year 1 Sem 2 Finals', '2025-10-08 00:00:00', '2025-08-01', 'no submission'),
-(2, 'Finals', 1, 'Mandarin Y1', 'Sem2Y1', 'Year1 ', 'Mandarin Year 1 Sem 2 Finals', '2025-10-01 00:00:00', '2025-07-23', 'no submission'),
-(3, 'Midterm', 1, 'Science Y1', 'Sem1Y1', 'Year1 ', 'Science Year 1 Sem 1 Midterm', '2025-03-28 00:00:00', '2025-02-11', 'no submission'),
-(4, 'Midterm', 1, 'English Y1', 'Sem1Y1', 'Year1 ', 'English Year 1 Sem 1 Midterm', '2025-02-14 00:00:00', '2025-01-15', 'no submission'),
-(5, 'Midterm', 1, 'Mathematics Y1', 'Sem1Y1', 'Year1 ', 'Mathematics Year 1 Sem 1 Midterm', '2025-01-24 00:00:00', '2025-01-03', 'no submission'),
-(6, 'Midterm', 1, 'Mandarin Y1', 'Sem1Y1', 'Year1 ', 'Mandarin Year 1 Sem 1 Midterm', '2025-02-01 00:00:00', '2025-03-26', 'no submission'),
-(7, 'Midterm', 1, 'Bahasa Malaysia Y1', 'Sem1Y1', 'Year1 ', 'Bahasa Malaysia Year 1 Sem 1 Midterm', '2025-02-01 00:00:00', '2025-03-27', 'no submission');
+(1, 'Finals', 1, 'English Y1', 'Sem2Y1', 'Year1', 'English Year 1 Sem 2 Finals', '2025-10-08 00:00:00', '2025-08-01', 'no submission'),
+(2, 'Finals', 1, 'Mandarin Y1', 'Sem2Y1', 'Year1', 'Mandarin Year 1 Sem 2 Finals', '2025-10-01 00:00:00', '2025-07-23', 'no submission'),
+(3, 'Midterm', 1, 'Science Y1', 'Sem1Y1', 'Year1', 'Science Year 1 Sem 1 Midterm', '2025-03-28 00:00:00', '2025-02-11', 'no submission'),
+(4, 'Midterm', 1, 'English Y1', 'Sem1Y1', 'Year1', 'English Year 1 Sem 1 Midterm', '2025-02-14 00:00:00', '2025-01-15', 'no submission'),
+(5, 'Midterm', 1, 'Mathematics Y1', 'Sem1Y1', 'Year1', 'Mathematics Year 1 Sem 1 Midterm', '2025-01-24 00:00:00', '2025-01-03', 'no submission'),
+(6, 'Midterm', 1, 'Mandarin Y1', 'Sem1Y1', 'Year1', 'Mandarin Year 1 Sem 1 Midterm', '2025-02-01 00:00:00', '2025-03-26', 'no submission'),
+(7, 'Midterm', 1, 'Bahasa Malaysia Y1', 'Sem1Y1', 'Year1', 'Bahasa Malaysia Year 1 Sem 1 Midterm', '2025-02-01 00:00:00', '2025-03-27', 'no submission');
 
 -- --------------------------------------------------------
 
@@ -105,19 +105,19 @@ CREATE TABLE `class` (
 --
 
 INSERT INTO `class` (`classCode`, `teacherID`, `yearCode`, `classCapacity`) VALUES
-('BlueY1', 2, 'Year1 ', 5),
+('BlueY1', 2, 'Year1', 5),
 ('BlueY2', 3, 'Year2', 5),
 ('BlueY3', 4, 'Year3', 5),
-('GreenY1', 1, 'Year1 ', 5),
+('GreenY1', 1, 'Year1', 5),
 ('GreenY2', 5, 'Year2', 5),
 ('GreenY3', 6, 'Year3', 5),
-('PurpleY1', 7, 'Year1 ', 5),
+('PurpleY1', 7, 'Year1', 5),
 ('PurpleY2', 8, 'Year2', 5),
 ('PurpleY3', NULL, 'Year3', NULL),
-('RedY1', 10, 'Year1 ', 5),
+('RedY1', 10, 'Year1', 5),
 ('RedY2', 11, 'Year2', 5),
 ('RedY3', 12, 'Year3', 5),
-('YellowY1', 13, 'Year1 ', 5),
+('YellowY1', 13, 'Year1', 5),
 ('YellowY2', 14, 'Year2', 5),
 ('YellowY3', 9, 'Year3', 5);
 
@@ -294,10 +294,10 @@ CREATE TABLE `semester` (
 --
 
 INSERT INTO `semester` (`semesterCode`, `yearCode`, `startDate`, `endDate`) VALUES
-('Sem1Y1', 'Year1 ', '2025-01-01', '2025-05-31'),
+('Sem1Y1', 'Year1', '2025-01-01', '2025-05-31'),
 ('Sem1Y2', 'Year2', '2025-01-01', '2025-05-31'),
 ('Sem1Y3', 'Year3', '2025-01-01', '2025-05-31'),
-('Sem2Y1', 'Year1 ', '2025-06-01', '2025-10-31'),
+('Sem2Y1', 'Year1', '2025-06-01', '2025-10-31'),
 ('Sem2Y2', 'Year2', '2025-06-01', '2025-10-31'),
 ('Sem2Y3', 'Year3', '2025-06-01', '2025-10-31');
 
@@ -477,7 +477,7 @@ CREATE TABLE `year` (
 --
 
 INSERT INTO `year` (`yearCode`, `description`) VALUES
-('Year1 ', 'Foundational learning with basic skills.'),
+('Year1', 'Foundational learning with basic skills.'),
 ('Year2', 'Building on basics and simple explorations.'),
 ('Year3', 'Advanced concepts and structured learning.');
 
