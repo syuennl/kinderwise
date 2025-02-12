@@ -612,6 +612,11 @@ ALTER TABLE `student`
 ALTER TABLE `teacher`
   MODIFY `teacherID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
+-- AUTO_INCREMENT for table `announcement`
+--
+ALTER TABLE `announcement`
+  MODIFY `announcementID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+  
 --
 -- Constraints for dumped tables
 --
