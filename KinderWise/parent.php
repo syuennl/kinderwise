@@ -174,7 +174,6 @@ $result = $stmt->get_result();
             <img src="./pics/logo.png" alt="KinderWise Logo">
         </div>
         <div class="top-right-buttons">
-            <button>🔔 Notifications</button>
             <button>👤 Profile</button>
         </div>
     </header>
@@ -201,8 +200,7 @@ $result = $stmt->get_result();
                 <div class="divider"></div>
                 
                 <div class="bottom">
-                    <li>⚙️ Settings</li>
-                    <li>↩️ Logout</li>
+                    <li><a href="logout.php">↩️ Logout</a></li>
                 </div>
     
             </nav>
