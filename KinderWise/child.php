@@ -182,9 +182,9 @@ $student_name = $_GET['student_name'];
                 
             
                 <div class="pages">
-                    <li><a href="parent.php">📊 Academic Report</a></li>
-                    <li><a href="parent.php">⏱️ Assessment</a></li>
-                    <li><a href="parent.php">📝 Announcement</a></li>
+                    <li><a href="academic_report.php?student_name=<?php echo urlencode($student_name); ?>">📊 Academic Report</a></li>
+                    <li><a href="view_assessment.php?student_name=<?php echo urlencode($student_name); ?>">⏱️ Assessment</a></li>
+                    <li><a href="view_announcement.php?student_name=<?php echo urlencode($student_name); ?>">📝 Announcement</a></li>
                     <br></br>
                     <br></br>
                     
