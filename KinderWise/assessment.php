@@ -1,46 +1,89 @@
 <?php
-
-    // session_start();
-    // include("connection.php");
-
-    // include("database.php");
+    session_start();
+    include("connection.php");
+    
     header('Content-Type: text/html; charset=utf-8');
     // content-type:  tells browser that the content being sent is HTML text (not an image, PDF, or other type of file)
     // charset: specifies that the text is encoded using UTF-8 character encoding
 
-    // temp db
-    $assessments = [ // *id
-    ['id' => 1, 'assessmentTitle' => 'English', 'semester' => '2', 'assessmentType' => 'Finals', 'postedOn' => '2025-10-08', 'details' => '1st sdcknsdckd'],
-    ['id' => 2, 'assessmentTitle' => 'Mandarin', 'semester' => '2', 'assessmentType' => 'Finals', 'postedOn' => '2025-10-01', 'details' => '2nd sdcknsdckd'],
-    ['id' => 3, 'assessmentTitle' => 'Science', 'semester' => '1', 'assessmentType' => 'Midterm', 'postedOn' => '2025-03-28', 'details' => '3rd sdcknsdckd'],
-    ['id' => 4, 'assessmentTitle' => 'English', 'semester' => '1', 'assessmentType' => 'Midterm', 'postedOn' => '2025-02-14', 'details' => '4th sdcknsdckd'],
-    ['id' => 5, 'assessmentTitle' => 'Maths', 'semester' => '1', 'assessmentType' => 'Midterm', 'postedOn' => '2025-01-24', 'details' => '5th sdcknsdckd']
-    ];
+    // if not logged in, redirect to login page
+    if(!isset($_SESSION['teacherID']))
+    {
+        header('Location: login.php'); // if not logged in, direct to login page
+        exit();
+    }
     
+    // teacherID
+    $teacherID = $_SESSION['teacherID'];
+
+    // yearCode
+    $sql = "SELECT c.yearCode FROM teacher t JOIN class c ON t.classAssigned = c.classCode WHERE t.teacherID = $teacherID";
+    $result = mysqli_query($conn, $sql);
+    $row = mysqli_fetch_assoc($result);
+    $yearCode = $row['yearCode'];
+
+
     function filterAssessments()
     {
-        global $assessments;
+        global $conn, $yearCode;
+        // get parameters passed in
         $subject = isset($_POST['subject']) ? $_POST['subject'] : 'All';
         $semester = isset($_POST['semester']) ? $_POST['semester'] : 'All';
+        
+        // get year shortform
+        $year = '';
+        if($yearCode == 'Year1 ') /***remove space */
+            $year = 'Y1';
+        elseif($yearCode == 'Year2')
+            $year = 'Y2';
+        else
+            $year = 'Y3';
+        
+        // filter assessments
+        $sql = "SELECT * FROM assessment WHERE 1=1";
+        $params = array();
+        $types = "";
 
-        $filtered_assessments = array_filter($assessments, function($a) use ($subject, $semester)
+        if($subject != 'All')
         {
-            $subject_match = ($subject == 'All' || $a['assessmentTitle'] == $subject); // if selection is all / db element matches selection
-            $semester_match = ($semester == 'All' || $a['semester'] == $semester);
-            return $subject_match && $semester_match; // add object to array
-        });
+            $sql .= " AND subjectName = ?"; // append to sql string
+            $params[] = $subject . " " . $year;
+            $types .= "s";
+        }
 
-
-        foreach($filtered_assessments as $f)
+        if($semester != 'All')
         {
+            $sql .= " AND semesterCode = ?"; // append to sql string
+            $params[] = 'Sem' . $semester . $year;
+            $types .= "s";
+        }
+
+        $stmt = $conn->prepare($sql);
+
+        if(!empty($params)) // subject / semester is selected
+            $stmt->bind_param($types, ...$params);
+
+        if (!$stmt->execute()) {  // execute and see if there are errors
+            error_log("Execute failed: (" . $stmt->errno . ") " . $stmt->error);
+            return;
+        }
+
+        $filtered_assessments = $stmt->get_result();
+
+        // pass results back to html
+        while($row = $filtered_assessments->fetch_assoc())
+        {
+            $date = new DateTime($row["postedOn"]) ;  
+            $date = $date->format('Y-m-d');
+            $typecolour = ($row["assessmentType"] == 'Midterm') ? 'green' : 'red';
             echo '<tr class="assessment-row">
-                <td class="assessment-title"><button class="title-btn" data-id=' . $f["id"] . '>'. $f["assessmentTitle"] .'</button></td>
-                <td class="assessment-semester">' . $f["semester"] . '</td>
-                <td class="assessment-type">' . $f["assessmentType"] .'</td>
-                <td class="assessment-date">' . $f["postedOn"] . '</td>
+                <td class="assessment-subject"><button class="subject-btn" data-id=' . $row["assessmentID"] . '>'. $row["subjectName"] .'</button></td>
+                <td class="assessment-semester">' . $row["semesterCode"] . '</td>
+                <td class="assessment-type" id=' . $typecolour . '>' . $row["assessmentType"] .'</td>
+                <td class="assessment-date">' . $date . '</td>
                 <td>
-                    <button class="edit" data-id=' . $f["id"] . '>Edit</button>
-                    <button class="delete" data-id=' . $f["id"] . '>Delete</button>
+                    <button class="edit" data-id=' . $row["assessmentID"] . '>Edit</button>
+                    <button class="delete" data-id=' . $row["assessmentID"] . '>Delete</button>
                 </td>
                 </tr>';
         }        
@@ -48,78 +91,161 @@
 
     function viewAssessment()
     {
-        global $assessments;
+        global $conn;
+
         $id = isset($_POST['id']) ? $_POST['id'] : null;
+        
         if($id)
         {
-            foreach($assessments as $a)
-            {
-                if($a['id'] ==  $id)
-                {
-                    header('Content-Type: application/json');
-                    echo json_encode($a); // encode as json and return
-                    return;
-                }
-            }
+            $stmt = $conn->prepare("SELECT * FROM assessment WHERE assessmentID = ?");
+            $stmt->bind_param('i', $id);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $assessment = $result->fetch_assoc();
+
+            header('Content-Type: application/json');
+            echo json_encode($assessment); // encode as json and return
+            return;
         }
+
 
         header('Content-Type: application/json'); // tells browser the reponse is json data not plain text/html
         echo json_encode(null); // sends back json-formatted null value when no assessment found, becomes the string "null"
     }
 
-    function editAssessment()
+    function editAssessment()  //edit subject nameeeee
     {
-        global $assessments;
+        global $conn, $yearCode;
+        // get variables passed in
         $id = isset($_POST['id']) ? $_POST['id'] : null;
-        $semester = isset($_POST['semester']) ? $_POST['semester'] : null;
-        $details = isset($_POST['details']) ? $_POST['details'] : null;
+        $subject = isset($_POST['subject']) ? $_POST['subject'] : null;
+        $sem = isset($_POST['semester']) ? $_POST['semester'] : null;
+        $description = isset($_POST['description']) ? $_POST['description'] : null;
 
-        if($id && $semester && $details)
+        if($subject && $sem && $description)
         {
-            foreach($assessments as $a)
+            $type = ($sem == 1) ? 'Midterm' : 'Finals'; // determine type
+            
+            // get semesterCode in the right format
+            $year = '';
+            // error_log('Initial year - Type: ' . gettype($year) . ', Length: ' . strlen($year));
+            // error_log('yearCode value: "' . $yearCode . '"');
+            // error_log('yearCode - Type: ' . gettype($yearCode) . ', Length: ' . strlen($yearCode));
+
+            if($yearCode === 'Year1 ') //*****take out the space */
+                $year = 'Y1';
+            elseif($yearCode === 'Year2')
+                $year = 'Y2';
+            elseif($yearCode === 'Year3') 
+                $year = 'Y3';
+
+            // error_log('Final year - Type: ' . gettype($year) . ', Length: ' . strlen($year));
+
+            $semester = 'Sem'. $sem . $year;  // format semester value to be Sem_Y_
+            $stmt = $conn->prepare("SELECT semesterCode FROM semester WHERE semesterCode = ?");
+            $stmt->bind_param('s', $semester);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $row = $result->fetch_assoc();
+            $semesterCode = $row['semesterCode'];
+
+            // update assessment
+            $stmt = $conn->prepare("UPDATE assessment SET subjectName = ?, semesterCode = ?, assessmentType = ?, description = ? WHERE assessmentID = ?");
+            $stmt->bind_param('ssssi', $subject, $semesterCode, $type, $description, $id);
+
+            if($stmt->execute())
             {
-                if($a['id'] == $id)
-                {
-                    $a['semester'] = $semester;
-                    if($semester == 1)
-                        $a['assessmentType'] = 'Midterm';
-                    else
-                        $a['assessmentType'] = 'Finals';
-                    $a['details'] = $details;
-
-                    header('Content-Type: application/json');
-                    echo json_encode(['success' => true]);
-                    return;
-                }
+                header('Content-Type: application/json');
+                echo json_encode(['success' => true]);
+            } else 
+            {
+                header('Content-Type: application/json');
+                echo json_encode(['success' => false, 'error' => $conn->error]);
             }
-        }
 
-        header('Content-Type: application/json');
-        echo json_encode(['success' => false]);
+            $stmt->close();
+        }
+        else{
+            header('Content-Type: application/json');
+            echo json_encode(['success' => false, 'error' => 'Missing required fields']);
+        }
     }
 
     function deleteAssessment()
     {
-        global $assessments;
+        header('Content-Type: application/json');
+        global $conn;
         $id = isset($_POST['id']) ? $_POST['id'] : null;
         if($id)
         {
-            foreach($assessments as $a)
-            {
-                if($a['id'] == $id)
-                {
-                    unset($assessments[$id]); // remove assessment
-                    $assessments = array_values($assessments); // reindex array to remove gaps
-                    header('Content-Type: application/json');
-                    echo json_encode(['success' => true]);
-                    return;
-                }
-            }
-        }
+            $stmt = $conn->prepare("DELETE FROM assessment WHERE assessmentID = ?");
+            $stmt->bind_param("i", $id);
 
-        header('Content-Type: application/json');
-        echo json_encode(['success' => false]);
+            if($stmt->execute())
+            {
+                header('Content-Type: application/json');
+                echo json_encode(['success' => true]);
+            }
+            else
+            {
+                header('Content-Type: application/json');
+                echo json_encode(['success' => false, 'error' => $conn->error]);
+            }
+
+            $stmt->close();
+        }
+        else
+        {
+            header('Content-Type: application/json');
+            echo json_encode(['success' => false, 'error' => 'No ID provided']);
+        }
     }
+
+    function addAssessment()
+    {
+        global $conn, $teacherID, $yearCode;
+        // get parameters passed in
+        $subject = isset($_POST['subject']) ? $_POST['subject'] : null;
+        $sem = isset($_POST['semester']) ? $_POST['semester'] : null;
+        $description = isset($_POST['description']) ? $_POST['description'] : null;
+        $type = ($sem == 1) ? 'Midterm' : 'Finals';  // determine type
+
+        // get semesterCode in correct format
+        $year = '';
+        if($yearCode == 'Year1 ') //****remove space */
+            $year = 'Y1';
+        elseif($yearCode == 'Year2')
+            $year = 'Y2';
+        else
+            $year = 'Y3';
+
+        $semester = 'Sem'. $sem . $year;  // format semester value to be Sem_Y_
+        $stmt = $conn->prepare("SELECT semesterCode FROM semester WHERE semesterCode = ?");
+        $stmt->bind_param('s', $semester);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $row = $result->fetch_assoc();
+        $semesterCode = $row['semesterCode'];
+
+        // add assessment
+        // prepared statements to prevent SQL injection
+        $stmt = $conn->prepare("INSERT INTO assessment (assessmentType, teacherID, subjectName, semesterCode, yearCode, description, deadline, status) 
+                                VALUES (?, ?, ?, ?, ?, ?, '2025-01-01', 'no submission')");  /**ddl*** */
+                                // ? = placeholders, instead of directly putting values in the SQL string, use these placeholders for safety
+        $stmt->bind_param("sissss", $type, $teacherID, $subject, $semesterCode, $yearCode, $description);
+                        // each letter corresponds to one ?, specifies the type of each value that is being bind (s=str, i=int)
+
+        if($stmt->execute()) {
+            header('Content-Type: application/json');
+            echo json_encode(['success' => true]);
+        } else {
+            header('Content-Type: application/json');
+            echo json_encode(['success' => false, 'error' => $conn->error]);
+        }
+    
+        $stmt->close();
+    }
+
 
     // switch to assign functions
     if(isset($_POST['action']))
@@ -131,6 +257,9 @@
                 break;
             case 'view':
                 viewAssessment();
+                break;
+            case 'add':
+                addAssessment();
                 break;
             case 'edit':
                 editAssessment();
