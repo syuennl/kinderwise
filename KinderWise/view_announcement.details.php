@@ -3,6 +3,7 @@ session_start();
 include("connection.php");
 
 $student_name = $_GET['student_name']; 
+$announcement_id = $_GET['announcementID']; 
 
 $classQuery = "SELECT classCode FROM student WHERE name = ?";
 $classStmt = $conn->prepare($classQuery);
@@ -10,13 +11,20 @@ $classStmt->bind_param("s", $student_name);
 $classStmt->execute();
 $classResult = $classStmt->get_result();
 $studentClass = $classResult->fetch_assoc()['classCode'] ?? 'N/A';
+
+$announcementQuery = "SELECT announcementTitle, details FROM announcement WHERE announcementID = ?";
+$announcementStmt = $conn->prepare($announcementQuery);
+$announcementStmt->bind_param("i", $announcement_id);
+$announcementStmt->execute();
+$announcementResult = $announcementStmt->get_result();
+$announcement = $announcementResult->fetch_assoc();
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>View Announcement</title>
+    <title>View Announcement Details</title>
     <style>
         body {
             font-family: Trebuchet MS, sans-serif;
@@ -155,9 +163,8 @@ $studentClass = $classResult->fetch_assoc()['classCode'] ?? 'N/A';
             justify-content: center;
             align-items: flex-start;
             flex-grow: 1; /* Ensures centering within content area */
-            height: 80vh;
-            margin-left: 50px;
-            
+            height: auto;
+            margin-left: 50px;          
         }
         
         .student-info {
@@ -186,6 +193,52 @@ $studentClass = $classResult->fetch_assoc()['classCode'] ?? 'N/A';
             padding: 5px 8px;
             border-radius: 5px;
             box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+        }
+
+        .announcement-details {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            width: 100%;
+            max-width: 800px;
+            text-align: left;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+        }
+
+        .detail-row {
+            flex-direction: column;
+            margin-bottom: 25px;
+        }
+
+        .detail-label {
+            margin-right: 20px;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: #666;
+            font-size: 18px;
+        }
+
+        .detail-content {
+            background-color:rgb(252, 247, 233);
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+            display: inline-block; 
+        }
+
+        .back-button {
+            background-color: #557FF7;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 30px;
+            font-family: Trebuchet MS, sans-serif;
+        }
+
+        .back-button:hover {
+            background-color: #3b5fc9;
         }
     </style>
 </head>
@@ -234,6 +287,20 @@ $studentClass = $classResult->fetch_assoc()['classCode'] ?? 'N/A';
                 <h3 class="student-name"><?php echo $student_name; ?></h3>
                 <span class="student-class"><?php echo htmlspecialchars($studentClass); ?></span>
             </div>
+
+            <div class="announcement-details">
+                <div class="detail-row">
+                    <div class="detail-label">Title:</div>
+                    <div class="detail-content"><?php echo htmlspecialchars($announcement['announcementTitle']); ?></div>
+                </div>
+                
+                <div class="detail-label">Announcement details:</div>
+                <div class="detail-content"><?php echo nl2br(htmlspecialchars($announcement['details'])); ?></div>
+            
+            </div>
+
+            <button class="back-button" onclick="window.location.href='view_announcement.php?student_name=<?php echo urlencode($student_name); ?>'">← Back</button>
+
         </div>
     </div>
 </body>
