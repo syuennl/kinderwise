@@ -198,7 +198,7 @@ include("connection.php");
                 
                 <div class="bottom">
                     <li>⚙️ Settings</li>
-                    <li>↩️ Logout</li>
+                    <li><a href="logout.php">↩️ Logout</a></li>
                 </div>
     
             </nav>
