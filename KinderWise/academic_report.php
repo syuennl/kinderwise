@@ -242,7 +242,7 @@ if ($hasResults && !empty($subjects)) {
             flex-grow: 1; /* Ensures centering within content area */
             height: 80vh;
             margin-left: 50px;
-            
+            margin-top: 28px;
         }
 
         .table-container {
