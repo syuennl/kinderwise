@@ -2,7 +2,8 @@
 session_start();
 include("connection.php");
 
-$student_name = $_GET['student_name']; 
+$student_name = $_GET['student_name'];
+$assessment_id = $_GET['assessmentID']; 
 
 $classQuery = "SELECT classCode FROM student WHERE name = ?";
 $classStmt = $conn->prepare($classQuery);
@@ -10,6 +11,13 @@ $classStmt->bind_param("s", $student_name);
 $classStmt->execute();
 $classResult = $classStmt->get_result();
 $studentClass = $classResult->fetch_assoc()['classCode'] ?? 'N/A';
+
+$assessmentQuery = "SELECT subjectName, semesterCode, description FROM assessment WHERE assessmentID = ?";
+$assessmentStmt = $conn->prepare($assessmentQuery);
+$assessmentStmt->bind_param("i", $assessment_id);
+$assessmentStmt->execute();
+$assessmentResult = $assessmentStmt->get_result();
+$assessment = $assessmentResult->fetch_assoc();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -154,7 +162,8 @@ $studentClass = $classResult->fetch_assoc()['classCode'] ?? 'N/A';
             flex-direction: column;
             align-items: flex-start;
             flex-grow: 1; /* Ensures centering within content area */
-            padding: 20px 50px;
+            height: auto;
+            margin-left: 50px;          
         }
 
         .student-info {
@@ -183,6 +192,52 @@ $studentClass = $classResult->fetch_assoc()['classCode'] ?? 'N/A';
             padding: 5px 8px;
             border-radius: 5px;
             box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+        }
+
+        .assessment-details {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            width: 100%;
+            max-width: 800px;
+            text-align: left;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+        }
+
+        .detail-row {
+            flex-direction: column;
+            margin-bottom: 25px;
+        }
+
+        .detail-label {
+            margin-right: 20px;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: #666;
+            font-size: 18px;
+        }
+
+        .detail-content {
+            background-color:rgb(245, 248, 255);
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+            display: inline-block; 
+        }
+
+        .back-button {
+            background-color: #557FF7;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 30px;
+            font-family: Trebuchet MS, sans-serif;
+        }
+
+        .back-button:hover {
+            background-color: #3b5fc9;
         }
     </style>
 </head>
@@ -230,7 +285,25 @@ $studentClass = $classResult->fetch_assoc()['classCode'] ?? 'N/A';
             <div class="student-info">
                 <h3 class="student-name"><?php echo $student_name; ?></h3>
                 <span class="student-class"><?php echo htmlspecialchars($studentClass); ?></span>
-            </div>            
+            </div> 
+            
+            <div class="assessment-details">
+                <div class="detail-row">
+                    <div class="detail-label">Subject:</div>
+                    <div class="detail-content"><?php echo htmlspecialchars($assessment['subjectName']); ?></div>
+                </div>
+                
+                <div class="detail-row">
+                    <div class="detail-label">Semester:</div>
+                    <div class="detail-content"><?php echo htmlspecialchars($assessment['semesterCode']); ?></div>
+                </div>
+
+                <div class="detail-label">Assessment details:</div>
+                <div class="detail-content"><?php echo nl2br(htmlspecialchars($assessment['description'])); ?></div>
+            </div>
+
+            <button class="back-button" onclick="window.location.href='view_assessment.php?student_name=<?php echo urlencode($student_name); ?>'">← Back</button>
+
         </div>
     </div>
 </body>
