@@ -1,10 +1,6 @@
 <?php
   session_start();
   include("connection.php");
-  if(!isset($_SESSION['teacherID'])) {
-    header('Location: login.php');
-    exit();
-  }
 ?>
 
 <style>
@@ -159,110 +155,37 @@
     box-shadow: 2px 5px 4px rgba(84, 82, 82, 0.2);
   }
 
-  /*filters*/
-  .filters {
-    /*?*/
+  .assessment{
+    background-color: #f5f8fb;
+  }
+
+  .assessment-info{
+    padding-left: 40px;
     display: flex;
-    gap: 10px;
-    margin-top: 10px;
+    flex-direction: column;
+    align-items: flex-start;
+    width: fit-content;
   }
 
-  .filter-table {
-    width: 100%;
-    border: 1.5px solid #ddd;
-    border-collapse: separate;
-    border-spacing: 0;
-    border-radius: 10px;
-    overflow: hidden;
+  .assessment-description{
+    width: 600px;
+    height: 200px;
   }
 
-  .filter-table td {
-    border-right: 1.5px solid #ddd;
-    padding: 20px;
+  .buttons{
+    align-self: flex-end;
+    right: 380px;
   }
 
-  .filter-table td:last-child {
-    border-right: 0;
-  }
-
-  .filter-tag,
-  .subject-filter,
-  .semester-filter,
-  .reset {
-    font-size: 14px;
-  }
-
-  .subject-filter,
-  .semester-filter,
-  .reset {
-    border: 0;
-    background-color: #f5f8fb;
-  }
-
-  .reset {
-    cursor: pointer;
-    color: #d52753;
-  }
-
-  /*assessment table*/
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    border-spacing: 0 10px;
-  }
-
-  thead {
-    border-bottom: 1px solid #91a8d1;
-  }
-
-  th,
-  td {
-    padding: 20px;
-    text-align: center;
-  }
-
-  th {
-    color: #778dca;
-  }
-
-  .assessment-row {
-    background-color: #f5f8fb;
-    border-radius: 15px;
-  }
-
-  .subject-btn {
-    font-size: 16;
-    background-color: #f5f8fb;
-    border: 0;
-    cursor: pointer;
-  }
-
-  #green{
-    color:rgb(49, 195, 115);
-  }
-
-  #red{
-    color:rgb(246, 32, 86);
-  }
-
-  .edit,
-  .delete {
+  .save,
+  .cancel {
     padding: 5px 10px;
     border: none;
     cursor: pointer;
     margin-left: 10px;
   }
-  .edit {
-    background: white;
-    color: #778dca;
-    border: 1px solid #778dca;
-    border-radius: 15px;
-    width: 80px;
-    height: 30px;
-    font-weight: bold;
-  }
 
-  .delete {
+  .save {
     background: #91a8d1;
     color: white;
     border: 1px solid #778dca;
@@ -271,23 +194,15 @@
     height: 30px;
     font-weight: bold;
   }
-
-  .add {
-    background: #ffbc38;
-    color: white;
-    border: none;
+  .cancel {
+    background: #f5f8fb;
+    color: #778dca;
+    border:1px solid #778dca;
     border-radius: 15px;
-    box-shadow: 2px 5px 4px rgba(84, 82, 82, 0.2);
-    width: 70px;
+    width: 80px;
     height: 30px;
-    font-size: 24px;
     font-weight: bold;
-    cursor: pointer;
-    margin-left: 50px;
-    margin-top: 20px;
-    margin-bottom: 20px;
-    float: left;
-  }  
+  }
 </style>
 
 <!DOCTYPE html>
@@ -310,7 +225,7 @@
     <div class = "content">
         <div class="navbar">
             <nav>
-                <a href="teacher.php"><button class="dashboard">Dashboard</button></a>
+                <a href="teacher.php"><button>Dashboard</button></a>
                 
                 <div class="divider"></div>
                 
@@ -336,180 +251,159 @@
         </div>
 
         <div class="main-content">
-        <section>
-          <h1>Assessment</h1>
-          <input type="text" class="class-name" value="1 GREEN" size="2" disabled />
-          <!--***tchr's class-->
-          <br /><br />
+          <section class="assessment">
+            <h1>Assessment</h1>
+            <input type="text" class="class-name" value="1 GREEN" size="2" disabled>
+            <br><br><br>
+            
+            <div class="assessment-info">
+                <div>
+                  <span>Subject: </span> 
+                  <select name="editsubject" id="subject-id">
+                    <option data-field="subject" selected hidden></option>
+                    <option id="BM" ></option>
+                    <option id="BI" ></option>
+                    <option id="BC" ></option>
+                    <option id="MT" ></option>
+                    <option id="SC" ></option>
+                  </select>
+                </div>
+                <div>
+                  <span>Semester:</span> 
+                  <select name="editsemester" id="semester-id">
+                    <option data-field="semester" selected hidden></option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                  </select> 
+                </div><br><br>
+                <span>Assessment details:</span> <br><br>
+                <textarea class="assessment-description" data-field="description"></textarea> 
+                <br><br>
 
-          <!-- filters -->
-          <div class="filters">
-            <form action="assessment.php" method="POST" id="filter-form">
-              <table class="filter-table">
-                <tbody>
-                  <tr>
-                    <td class="filter-tag">Filter By:</td>
-
-                    <td>
-                      <select class="subject-filter" name="subject">
-                        <option selected>All subjects</option>
-                        <option>Bahasa Malaysia Y1</option>
-                        <option>Mandarin Y1</option>
-                        <option>English Y1</option>
-                        <option>Science Y1</option>
-                        <option>Mathematics Y1</option>
-                      </select>
-                    </td>
-
-                    <td>
-                      <select class="semester-filter" name="semester">
-                        <option selected>All semesters</option>
-                        <option>1</option>
-                        <option>2</option>
-                      </select>
-                    </td>
-
-                    <td>
-                      <input class="reset" type="reset" value="Reset Filter" />
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </form>
-          </div>
-
-          <!-- assessment table -->
-          <table>
-            <thead>
-              <tr>
-                <th>Subject</th>
-                <th>Semester</th>
-                <th>Assessment</th>
-                <th>Posted on</th>
-                <th></th>
-              </tr>
-            </thead>
-
-            <tbody id="assessment-list">
-              <!--loaded using script-->
-            </tbody>
-          </table>
-          <button class="add">+</button> 
-        </section>
-      </div>
+                <div class="buttons">
+                  <button class="save">Save</button>
+                  <button class="cancel">Cancel</button>
+                </div>
+            </div>
+          </section>
+        </div>
     </div>
-
-    
   </body>
 
   <script>
-    // when document loaded
-    document.addEventListener("DOMContentLoaded", function () {
-      filterAssessments(); // load assessments
-
-      // filters
-      document.getElementById("filter-form").addEventListener("submit", filterAssessments);
-  
-      document.querySelector(".subject-filter").addEventListener("change", filterAssessments); // subject
-      document.querySelector(".semester-filter").addEventListener("change", filterAssessments); // semester
-
-      // reset button
-      document.querySelector('input[type="reset"]').addEventListener("click", function () {
-          setTimeout(filterAssessments, 0); // run after form reset completes
-      });
-
-      // add button
-      document.querySelector(".add").addEventListener("click", function () {
-        location.href = "addAssessment.php";
-      });
+    document.addEventListener('DOMContentLoaded', function(){
+      loadAssessment(); // display assessment details
 
       // dashboard button
-      document.querySelector(".dashboard").addEventListener("click", function () {
-          location.href = "teacher.php";
-      });
+      document.querySelector('.dashboard').addEventListener('click', function(){
+        location.href = "teacher.php";
+      })
     });
 
-    // called when filter is selected
-    function filterAssessments() {
-      if (event) event.preventDefault(); // prevent form submission if called from an event
-
-      var form = document.getElementById("filter-form"); // get the form element
-      var formData = new FormData(form); // get form data
-      formData.append("action", "filter"); // specify which function to call
-
-      // fetch the php file and pass the form data
-      fetch("assessment.php", {
-        method: "POST",
-        body: formData,
-      })
-      .then((response) => {
-        console.log("Response status:", response.status);
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        return response.text();
-      })
-      .then((data) => {     
-        // data = response in text from previous lines
-        document.getElementById("assessment-list").innerHTML = data; // update assessment table in html
-
-        // setup edit buttons
-        const editButtons = document.querySelectorAll(".edit");
-        editButtons.forEach((button) => {
-          button.addEventListener("click", function () {
-            // reattach event listeners to edit buttons
-            const assessmentID = this.getAttribute("data-id");
-            location.href = "editAssessment.php?id=" + assessmentID;
-          });
-        });
-
-        // setup assessment buttons
-        const assessmentBtns = document.querySelectorAll(".subject-btn");
-        assessmentBtns.forEach((button) => {
-          button.addEventListener("click", function () {
-            // reattach event listeners to subject buttons
-            const assessmentID = this.getAttribute("data-id");
-            location.href = "viewAssessment.php?id=" + assessmentID;
-          });
-        });
-
-        // setup delete buttons
-        const deleteBtns = document.querySelectorAll(".delete");
-        deleteBtns.forEach((button) => {
-          // reattach event listeners to delete buttons
-          button.addEventListener("click", deleteAssessment);
-        });
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
-
-      return false; // prevent form submission
+    function getAssessmentID()
+    {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get('id'); // get the assessment id passed from url
     }
 
-    function deleteAssessment() {
-      const id = this.getAttribute("data-id");
-      let confirmation = confirm("Are you sure you want to delete this?");
-      if (confirmation) {
-        const formData = new FormData();
-        formData.append("action", "delete");
-        formData.append("id", id);
-        fetch("assessment.php", {
-          method: "POST",
-          body: formData,
-        })
-        .then((response) => response.json())
-        .then(result => {
-          if (result.success) {
-            alert("Assessment deleted successfully");
-            window.location.href = "manageAssessment.php";
-          } else alert("Failed to update assessment");
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-          alert("Error deleting assessment");
-        });
+     function loadAssessment()
+    {
+      const id = getAssessmentID(); // get the id passed
+      if(!id){
+        alert('No assessment ID provided');
+        return;
       }
+ 
+      const formData = new FormData();
+      formData.append('action', 'view');
+      formData.append('id', id);
+ 
+      fetch("assessment.php", {  
+        method: 'POST',
+        body: formData
+      })
+      .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then(assessment => {
+        if(!assessment){
+          alert('Assessment not found');
+          return;
+        }
+ 
+        // assign the database values to the page attributes
+        document.querySelector('[data-field="subject"]').textContent = assessment.subjectName;
+        if(assessment.yearCode == 'Year1')
+          year = 'Y1';
+        else if(assessment.yearCode == 'Year2')
+          year = 'Y2';
+        else
+          year = 'Y3';
+
+        document.getElementById('BM').textContent = 'Bahasa Malaysia ' + year;
+        document.getElementById('BI').textContent = 'English ' + year;
+        document.getElementById('BC').textContent = 'Mandarin ' + year;
+        document.getElementById('MT').textContent = 'Mathematics ' + year;
+        document.getElementById('SC').textContent = 'Science ' + year;
+ 
+        const semesterCode = parseInt(assessment.semesterCode.match(/\d/)[0]);  // trim the front part of sem code
+        document.querySelector('[data-field="semester"]').textContent = semesterCode;
+        document.querySelector('[data-field="description"]').value = assessment.description;
+ 
+        // setup save btn
+        const saveBtn = document.querySelector('.save');
+        saveBtn.setAttribute('data-id', assessment.assessmentID); // set attribute for save btn
+        saveBtn.addEventListener('click', saveAssessment)
+ 
+        // setup cancel btn
+        const cancelBtn = document.querySelector('.cancel');
+        cancelBtn.setAttribute('data-id', assessment.assessmentID); // set attribute for cancel btn
+        cancelBtn.addEventListener('click', function(){
+          const assessmentID = this.getAttribute('data-id');
+          location.href = "viewAssessment.php?id=" + assessmentID;
+        })
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        alert('Error loading assessment');
+      });
+    }
+
+    function saveAssessment()
+    {
+      const id = this.getAttribute('data-id');
+      const subject = document.getElementById('subject-id').value;
+      const semester = document.getElementById('semester-id').value;
+      const description = document.querySelector('[data-field="description"]').value;
+ 
+      const formData = new FormData();
+      formData.append('action', 'edit');
+      formData.append('id', id);
+      formData.append('subject', subject);
+      formData.append('semester', semester);
+      formData.append('description', description);
+ 
+      fetch('assessment.php', {
+        method: 'POST',
+        body: formData
+      })
+      .then(response => response.json())
+      .then(result => {
+        if(result.success)
+        {
+          alert('Assessment updated successfully');
+          window.location.href = 'viewAssessment.php?id=' + id;
+        }
+        else
+          alert('Failed to update assessment');
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        alert('Error saving assessment');
+      });
     }
   </script>
 </html>
