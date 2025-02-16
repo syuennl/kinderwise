@@ -147,15 +147,15 @@
   }
 
   .class-name {
-    width: 50px;
+    width: 70px;
     height: 25px;
     float: left;
     text-align: center;
     font-weight: bold;
     border-radius: 5px;
     border: 0;
-    background-color: #f2d5ff;
-    color: #dd46ff;
+    background-color: #A3D1C6;
+    color: #3D8D7A;
     box-shadow: 2px 5px 4px rgba(84, 82, 82, 0.2);
   }
 
@@ -318,10 +318,10 @@
                 
             
                 <div class="pages">
-                      <li class="selected-pg"><a href="manageAssessment.php">Assessment</a></li>
-                      <li><a href="uploadMarks.php">Grading</a></li>
-                      <li><a href="">Performance Report</a></li>
-                      <li><a href="manageAnnouncement.php">Announcement</a></li>
+                      <li class="selected-pg"><a href="manageAssessment.php">📝 Assessment</a></li>
+                      <li><a href="uploadMarks.php">💯 Grading</a></li>
+                      <li><a href="generateReport.php">📊 Performance Report</a></li>
+                      <li><a href="manageAnnouncement.php">🗪 Announcement</a></li>
                       <br></br>
                       <br></br>
                     
@@ -330,8 +330,7 @@
                 <div class="divider"></div>
                 
                 <div class="bottom">
-                    <li>⚙️ Settings</li>
-                    <li>↩️ Logout</li>
+                    <li><a href="logout.php">↩️ Logout</a></li>
                 </div>
             </nav>
         </div>
@@ -339,7 +338,7 @@
         <div class="main-content">
         <section>
           <h1>Assessment</h1>
-          <input type="text" class="class-name" value="1 RED" size="2" disabled />
+          <input type="text" class="class-name" value="1 GREEN" size="2" disabled />
           <!--***tchr's class-->
           <br /><br />
 
@@ -353,18 +352,18 @@
 
                     <td>
                       <select class="subject-filter" name="subject">
-                        <option selected>All</option>
-                        <option>Bahasa Malaysia</option>
-                        <option>Mandarin</option>
-                        <option>English</option>
-                        <option>Science</option>
-                        <option>Mathematics</option>
+                        <option selected>All subjects</option>
+                        <option>Bahasa Malaysia Y1</option>
+                        <option>Mandarin Y1</option>
+                        <option>English Y1</option>
+                        <option>Science Y1</option>
+                        <option>Mathematics Y1</option>
                       </select>
                     </td>
 
                     <td>
                       <select class="semester-filter" name="semester">
-                        <option selected>All</option>
+                        <option selected>All semesters</option>
                         <option>1</option>
                         <option>2</option>
                       </select>
