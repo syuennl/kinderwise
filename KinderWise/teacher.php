@@ -1,3 +1,12 @@
+<?php
+  session_start();
+  include("connection.php");
+  if(!isset($_SESSION['teacherID'])) {
+    header('Location: login.php');
+    exit();
+  }
+?>
+
 <style>
 body {
     font-family: Trebuchet MS, sans-serif;
@@ -63,12 +72,6 @@ header {
     cursor: pointer;
     transition: ease-out 0.9s ;
 }
-
-/*
-.navbar li a:hover {
-    color:rgb(255, 255, 255);
-}
-*/
 
 .navbar a button {
     font-family: Trebuchet MS, sans-serif;
@@ -181,10 +184,10 @@ a:active { text-decoration: none; }
                   
               
                   <div class="pages">
-                      <li><a href="manageAssessment.php">Assessment</a></li>
-                      <li><a href="uploadMarks.php">Grading</a></li>
-                      <li><a href="">Performance Report</a></li>
-                      <li><a href="manageAnnouncement.php">Announcement</a></li>
+                      <li><a href="manageAssessment.php">📝 Assessment</a></li>
+                      <li><a href="uploadMarks.php">💯 Grading</a></li>
+                      <li><a href="generateReport.php">📊 Performance Report</a></li>
+                      <li><a href="manageAnnouncement.php">🗪 Announcement</a></li>
                       <br></br>
                       <br></br>
                       
@@ -193,8 +196,7 @@ a:active { text-decoration: none; }
                   <div class="divider"></div>
                   
                   <div class="bottom">
-                      <li>⚙️ Settings</li>
-                      <li>↩️ Logout</li>
+                      <li><a href="logout.php">↩️ Logout</a></li>
                   </div> 
               </nav>
           </div>
@@ -202,10 +204,10 @@ a:active { text-decoration: none; }
           <div class="container">
             <h1>Welcome, Teacher !</h1>
             <div class="dashboard-buttons">
-                <a href="manageAssessment.php"><button>Assessment</button></a>
-                <a href=""><button>Grading</button></a>
-                <a href=""><button>Performance Report</button></a>
-                <a href=""><button>Announcement</button></a>
+                <a href="manageAssessment.php"><button>📝 Assessment</button></a>
+                <a href="uploadMarks.php"><button>💯 Grading</button></a>
+                <a href="generateReport.php"><button>📊 Performance Report</button></a>
+                <a href="manageAnnouncement.php"><button>🗪 Announcement</button></a>
             </div>
           </div>
     </div>
@@ -214,10 +216,6 @@ a:active { text-decoration: none; }
   <script>
     // add event listeners for:
     document.addEventListener('DOMContentLoaded', function() {
-
-      // filters
-      document.querySelector('.subject-filter').addEventListener('change', filterAssessments); // subject
-      document.querySelector('.semester-filter').addEventListener('change', filterAssessments); // semester
       
       // reset button 
       document.querySelector('input[type="reset"]').addEventListener('click', function() {
