@@ -461,7 +461,9 @@ INSERT INTO `teacher` (`teacherID`, `name`, `email`, `contactNumber`, `password`
 (11, 'Divya Menon', 'divya.menon@kinderwise.com', '0123256987', 'divya999', 'RedY2'),
 (12, 'Goh Yi Ting', 'goh.yiting@kinderwise.com', '0145698741', 'yiting45', 'RedY3'),
 (13, 'Roslan Hafeez', 'roslan.hafeez@kinderwise.com', '0102587963', 'roslan77', 'YellowY1'),
-(14, 'Selvi Arumugam', 'selvi.arumugam@kinderwise.com', '01147852136', 'selvi888', 'YellowY2');
+(14, 'Selvi Arumugam', 'selvi.arumugam@kinderwise.com', '01147852136', 'selvi888', 'YellowY2'),
+(15, 'Song Man Tou', 'songmantou@kinderwise.com', '0112345678', 'song', NULL);
+
 
 -- --------------------------------------------------------
 
@@ -611,7 +613,7 @@ ALTER TABLE `student`
 -- AUTO_INCREMENT for table `teacher`
 --
 ALTER TABLE `teacher`
-  MODIFY `teacherID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `teacherID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 -- AUTO_INCREMENT for table `announcement`
 --
