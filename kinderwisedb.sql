@@ -231,7 +231,7 @@ CREATE TABLE `principal` (
 --
 
 INSERT INTO `principal` (`principalID`, `name`, `email`, `contactNumber`, `password`) VALUES
-(1, 'Yap Sze Thin', 'yapszethin@email.com', '0108140417', 'szethin');
+(1, 'Yap Sze Thin', 'yapszethin@kinderwise.com', '0108140417', 'szethin');
 
 -- --------------------------------------------------------
 
