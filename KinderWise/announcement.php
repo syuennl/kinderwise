@@ -16,12 +16,6 @@
     // teacherID
     $teacherID = $_SESSION['teacherID'];
 
-    // yearCode
-    // $sql = "SELECT c.yearCode FROM teacher t JOIN class c ON t.classAssigned = c.classCode WHERE t.teacherID = $teacherID";
-    // $result = mysqli_query($conn, $sql);
-    // $row = mysqli_fetch_assoc($result);
-    // $yearCode = $row['yearCode'];
-
 
     function loadAnnouncements()
     {
@@ -140,7 +134,6 @@
 
         // add announcement
         // prepared statements to prevent SQL injection
-        //*****announcementtitle capital  id possible osoo */
         if(!$title || !$details)
         {
             header('Content-Type: application/json');
