@@ -143,15 +143,15 @@
   }
 
   .class-name {
-    width: 50px;
+    width: 70px;
     height: 25px;
     float: left;
     text-align: center;
     font-weight: bold;
     border-radius: 5px;
     border: 0;
-    background-color: #f2d5ff;
-    color: #dd46ff;
+    background-color: #A3D1C6;
+    color: 3D8D7A;
     box-shadow: 2px 5px 4px rgba(84, 82, 82, 0.2);
   }
 
@@ -234,10 +234,10 @@
                 
             
                 <div class="pages">
-                      <li class="selected-pg"><a href="manageAssessment.php">Assessment</a></li>
-                      <li><a href="uploadMarks.php">Grading</a></li>
-                      <li><a href="">Performance Report</a></li>
-                      <li><a href="manageAnnouncement.php">Announcement</a></li>
+                      <li class="selected-pg"><a href="manageAssessment.php">📝 Assessment</a></li>
+                      <li><a href="uploadMarks.php">💯 Grading</a></li>
+                      <li><a href="generateReport.php">📊 Performance Report</a></li>
+                      <li><a href="manageAnnouncement.php">🗪 Announcement</a></li>
                       <br></br>
                       <br></br>
                     
@@ -246,8 +246,7 @@
                 <div class="divider"></div>
                 
                 <div class="bottom">
-                    <li>⚙️ Settings</li>
-                    <li>↩️ Logout</li>
+                    <li><a href="logout.php">↩️ Logout</a></li>
                 </div>
             </nav>
         </div>
@@ -255,17 +254,25 @@
         <div class="main-content">          
           <section class="assessment">
             <h1>Assessment</h1>
-            <input type="text" class="class-name" value="1 RED" size="2" disabled>
+            <input type="text" class="class-name" value="1 GREEN" size="2" disabled>
             <br><br><br>
             
             <div class="assessment-info">
                 <div>
-                  <span>Subject: </span> <input type="text" class="subject"><br><br> <!--generalise the class names***-->
+                  <span>Subject: </span>  <!--generalise the class names***-->
+                  <select name="addsubject" id="subject-id">
+                    <option selected hidden></option>
+                    <option id="BM"></option>
+                    <option id="BI"></option>
+                    <option id="BC"></option>
+                    <option id="MT"></option>
+                    <option id="SC"></option>
+                  </select>
                 </div>
                 
                 <div>
                   <span>Semester:</span> 
-                  <select name="editsemester" id="semester-id">
+                  <select name="addsemester" id="semester-id">
                     <option selected hidden></option>
                     <option value="1">1</option>
                     <option value="2">2</option>
@@ -287,6 +294,7 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', function(){
+        loadAssessment();
 
         // dashboard button
         document.querySelector('.dashboard').addEventListener('click', function(){
@@ -306,39 +314,44 @@
       return urlParams.get('id'); // get the assessment id passed from url
     }
 
-    // function saveAssessment()
-    // {
-    //   const semester = document.getElementById('semester-id').value;
-    //   const description = document.querySelector('[data-field="description"]').value;
+    function loadAssessment() // load the subject options
+    {
+      const formData = new FormData();
+      formData.append('action', 'subjects');
+ 
+      fetch("assessment.php", {  
+        method: 'POST',
+        body: formData
+      })
+      .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then(subjects => {
+        if(!subjects){
+          alert('Failed to load subjects');
+          return;
+        }
 
-    //   const formData = new FormData();
-    //   formData.append('action', 'edit');
-    //   formData.append('semester', semester);
-    //   formData.append('description', description);
-
-    //   fetch('assessment.php', {
-    //     method: 'POST',
-    //     body: formData
-    //   })
-    //   .then(response => response.json())
-    //   .then(result => {
-    //     if(result.success)
-    //     {
-    //       alert('Assessment updated successfully');
-    //       window.location.href = 'manageAssessment.php';
-    //     }
-    //     else
-    //       alert('Failed to update assessment');
-    //   })
-    //   .catch(error => {
-    //     console.error('Error:', error);
-    //     alert('Error saving assessment');
-    //   });
-    // }
+        Object.entries(subjects).forEach(([code, name]) => {
+            const option = document.getElementById(code);
+            if (option) {
+                option.textContent = name;
+                option.value = name;
+            }
+        });
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        alert('Error loading assessment');
+      });
+    }
 
     function addAssessment()
     {
-        const subject = document.querySelector('.subject').value;
+        const subject = document.getElementById('subject-id').value;
         const semester = document.getElementById('semester-id').value;
         const description = document.querySelector('.assessment-description').value;
 
