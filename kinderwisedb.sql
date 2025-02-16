@@ -56,6 +56,17 @@ CREATE TABLE `announcement` (
   `teacherID` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `announcement`
+--
+
+INSERT INTO `announcement` (`announcementID`, `announcementTitle`, `details`, `postDate`, `teacherID`) VALUES
+(NULL, 'Parent-Teacher Meeting Reminder', "Dear Parents and Guardians,\r\nWe would like to remind you about the upcoming Parent-Teacher Meeting to discuss your child\'s progress, 
+  share feedback, and strengthen our partnership.\r\n\r\nDetails of the Meeting:\r\n\r\nDate: 14-07-2025\r\nTime: 10am-12pm\r\n'", '2025-02-13', 1),
+
+(NULL, 'Fun Friday: Dress Up Day Ahead!', "Get ready for a fun-filled Friday! \r\n\r\nThis week, we’re having a Dress Up Day, 
+  so come to school in your favorite costume or outfit. \r\n\r\nLet’s make it a day full of creativity and excitement. \r\nWe can\'t wait to see everyone\'s amazing looks!", '2025-02-13', 1);
+
 -- --------------------------------------------------------
 
 --
@@ -276,7 +287,22 @@ INSERT INTO `result` (`resultID`, `finalScore`, `studentID`, `assessmentID`, `st
 (22, 80, 5, 4, 'unverified'),
 (23, 99, 5, 5, 'unverified'),
 (24, 80, 5, 6, 'unverified'),
-(25, 86, 5, 7, 'unverified');
+(25, 86, 5, 7, 'unverified'),
+(26, 91, 17, 3, 'unverified'), 
+(27, '80', '17', '4', 'unverified'), 
+(28, '87', '17', '5', 'unverified'), 
+(29, '99', '17', '6', 'unverified'), 
+(30, '91', '17', '7', 'unverified'), 
+(31, '88', '19', '3', 'unverified'), 
+(32, '86', '19', '4', 'unverified'), 
+(33, '73', '19', '5', 'unverified'), 
+(34, '91', '19', '6', 'unverified'),
+(35, '80', '19', '7', 'unverified'), 
+(36, NULL, '20', '3', 'unverified'), 
+(37, '78', '20', '4', 'unverified'), 
+(38, '77', '20', '5', 'unverified'), 
+(39, '89', '20', '6', 'unverified'),
+(40, '95', '20', '7', 'unverified');
 
 -- --------------------------------------------------------
 
