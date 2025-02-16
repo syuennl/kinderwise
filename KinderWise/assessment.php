@@ -27,12 +27,12 @@
     {
         global $conn, $yearCode;
         // get parameters passed in
-        $subject = isset($_POST['subject']) ? $_POST['subject'] : 'All';
-        $semester = isset($_POST['semester']) ? $_POST['semester'] : 'All';
+        $subject = isset($_POST['subject']) ? $_POST['subject'] : 'All subjects';
+        $semester = isset($_POST['semester']) ? $_POST['semester'] : 'All semesters';
         
         // get year shortform
         $year = '';
-        if($yearCode == 'Year1 ') /***remove space */
+        if($yearCode == 'Year1')
             $year = 'Y1';
         elseif($yearCode == 'Year2')
             $year = 'Y2';
@@ -44,19 +44,22 @@
         $params = array();
         $types = "";
 
-        if($subject != 'All')
+        if($subject != 'All subjects')
         {
             $sql .= " AND subjectName = ?"; // append to sql string
-            $params[] = $subject . " " . $year;
+            $params[] = $subject;
             $types .= "s";
         }
 
-        if($semester != 'All')
+        if($semester != 'All semesters')
         {
             $sql .= " AND semesterCode = ?"; // append to sql string
             $params[] = 'Sem' . $semester . $year;
             $types .= "s";
         }
+
+        // add ORDER BY clause to sort by postedOn in descending order
+        $sql .= " ORDER BY postedOn DESC";
 
         $stmt = $conn->prepare($sql);
 
@@ -121,26 +124,21 @@
         $subject = isset($_POST['subject']) ? $_POST['subject'] : null;
         $sem = isset($_POST['semester']) ? $_POST['semester'] : null;
         $description = isset($_POST['description']) ? $_POST['description'] : null;
-
+ 
         if($subject && $sem && $description)
         {
             $type = ($sem == 1) ? 'Midterm' : 'Finals'; // determine type
-            
+           
             // get semesterCode in the right format
             $year = '';
-            // error_log('Initial year - Type: ' . gettype($year) . ', Length: ' . strlen($year));
-            // error_log('yearCode value: "' . $yearCode . '"');
-            // error_log('yearCode - Type: ' . gettype($yearCode) . ', Length: ' . strlen($yearCode));
-
-            if($yearCode === 'Year1 ') //*****take out the space */
+ 
+            if($yearCode === 'Year1') 
                 $year = 'Y1';
             elseif($yearCode === 'Year2')
                 $year = 'Y2';
-            elseif($yearCode === 'Year3') 
+            elseif($yearCode === 'Year3')
                 $year = 'Y3';
-
-            // error_log('Final year - Type: ' . gettype($year) . ', Length: ' . strlen($year));
-
+ 
             $semester = 'Sem'. $sem . $year;  // format semester value to be Sem_Y_
             $stmt = $conn->prepare("SELECT semesterCode FROM semester WHERE semesterCode = ?");
             $stmt->bind_param('s', $semester);
@@ -148,21 +146,21 @@
             $result = $stmt->get_result();
             $row = $result->fetch_assoc();
             $semesterCode = $row['semesterCode'];
-
+ 
             // update assessment
             $stmt = $conn->prepare("UPDATE assessment SET subjectName = ?, semesterCode = ?, assessmentType = ?, description = ? WHERE assessmentID = ?");
             $stmt->bind_param('ssssi', $subject, $semesterCode, $type, $description, $id);
-
+ 
             if($stmt->execute())
             {
                 header('Content-Type: application/json');
                 echo json_encode(['success' => true]);
-            } else 
+            } else
             {
                 header('Content-Type: application/json');
                 echo json_encode(['success' => false, 'error' => $conn->error]);
             }
-
+ 
             $stmt->close();
         }
         else{
@@ -178,25 +176,42 @@
         $id = isset($_POST['id']) ? $_POST['id'] : null;
         if($id)
         {
-            $stmt = $conn->prepare("DELETE FROM assessment WHERE assessmentID = ?");
+            // check if any results linked with assessment
+            // claude pls help me check in this part
+            $stmt = $conn->prepare("SELECT * FROM result WHERE assessmentID = ?");
             $stmt->bind_param("i", $id);
+            $stmt->execute();
+            $result = $stmt->get_result();
 
-            if($stmt->execute())
+            if($result->num_rows > 0) // if there's results linked with current assessment
             {
-                header('Content-Type: application/json');
+                // first delete from result table
+                $stmt1 = $conn->prepare("DELETE FROM result WHERE assessmentID = ?");
+                $stmt1->bind_param("i", $id);
+                $stmt1->execute();
+                $stmt1->close();
+            }
+            
+            // then delete from assessment table
+            $stmt2 = $conn->prepare("DELETE FROM assessment WHERE assessmentID = ?");
+            $stmt2->bind_param("i", $id);
+           
+            if($stmt2->execute())
+            {
                 echo json_encode(['success' => true]);
             }
             else
             {
-                header('Content-Type: application/json');
+                // header('Content-Type: application/json');
                 echo json_encode(['success' => false, 'error' => $conn->error]);
             }
-
+ 
+            $stmt2->close();
             $stmt->close();
         }
         else
         {
-            header('Content-Type: application/json');
+            // header('Content-Type: application/json');
             echo json_encode(['success' => false, 'error' => 'No ID provided']);
         }
     }
@@ -212,7 +227,7 @@
 
         // get semesterCode in correct format
         $year = '';
-        if($yearCode == 'Year1 ') //****remove space */
+        if($yearCode == 'Year1') 
             $year = 'Y1';
         elseif($yearCode == 'Year2')
             $year = 'Y2';
@@ -246,6 +261,22 @@
         $stmt->close();
     }
 
+    function getSubjects()
+    {
+        global $yearCode;
+        $year = '';
+ 
+        if($yearCode === 'Year1') 
+            $year = 'Y1';
+        elseif($yearCode === 'Year2')
+            $year = 'Y2';
+        elseif($yearCode === 'Year3')
+            $year = 'Y3';
+
+        $subjects = ["BM" => 'Bahasa Malaysia '.$year, "BI" => 'English '.$year, "BC" => 'Mandarin '.$year, "MT" => 'Mathematics '.$year, "SC" => 'Science '.$year];
+        return $subjects;        
+    }
+
 
     // switch to assign functions
     if(isset($_POST['action']))
@@ -266,6 +297,11 @@
                 break;
             case 'delete':
                 deleteAssessment();
+                break;
+            case 'subjects':
+                header('Content-Type: application/json');
+                echo json_encode(getSubjects());
+                break;
         }
     }
     
