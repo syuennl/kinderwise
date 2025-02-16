@@ -143,15 +143,15 @@
   }
 
   .class-name {
-    width: 50px;
+    width: 70px;
     height: 25px;
     float: left;
     text-align: center;
     font-weight: bold;
     border-radius: 5px;
     border: 0;
-    background-color: #f2d5ff;
-    color: #dd46ff;
+    background-color: #A3D1C6;
+    color: #3D8D7A;
     box-shadow: 2px 5px 4px rgba(84, 82, 82, 0.2);
   }
 
@@ -233,10 +233,10 @@
                 
             
                 <div class="pages">
-                      <li class="selected-pg"><a href="manageAssessment.php">Assessment</a></li>
-                      <li><a href="">Grading</a></li>
-                      <li><a href="">Performance Report</a></li>
-                      <li><a href="">Announcement</a></li>
+                      <li class="selected-pg"><a href="manageAssessment.php">📝 Assessment</a></li>
+                      <li><a href="uploadMarks.php">💯 Grading</a></li>
+                      <li><a href="generateReport.php">📊 Performance Report</a></li>
+                      <li><a href="manageAnnouncement.php">🗪 Announcement</a></li>
                       <br></br>
                       <br></br>
                     
@@ -245,8 +245,7 @@
                 <div class="divider"></div>
                 
                 <div class="bottom">
-                    <li>⚙️ Settings</li>
-                    <li>↩️ Logout</li>
+                    <li><a href="logout.php">↩️ Logout</a></li>
                 </div>
             </nav>
         </div>
@@ -254,11 +253,21 @@
         <div class="main-content">
           <section class="assessment">
             <h1>Assessment</h1>
-            <input type="text" class="class-name" value="1 RED" size="2" disabled>
+            <input type="text" class="class-name" value="1 GREEN" size="2" disabled>
             <br><br><br>
             
             <div class="assessment-info">
-                <span>Subject: <input type="text" data-field="subject"></span> <br><br>
+                <div>
+                  <span>Subject: </span> 
+                  <select name="editsubject" id="subject-id">
+                    <option data-field="subject" selected hidden></option>
+                    <option id="BM" ></option>
+                    <option id="BI" ></option>
+                    <option id="BC" ></option>
+                    <option id="MT" ></option>
+                    <option id="SC" ></option>
+                  </select>
+                </div>
                 <div>
                   <span>Semester:</span> 
                   <select name="editsemester" id="semester-id">
@@ -297,18 +306,18 @@
       return urlParams.get('id'); // get the assessment id passed from url
     }
 
-    function loadAssessment()
+     function loadAssessment()
     {
       const id = getAssessmentID(); // get the id passed
       if(!id){
         alert('No assessment ID provided');
         return;
       }
-
+ 
       const formData = new FormData();
       formData.append('action', 'view');
       formData.append('id', id);
-
+ 
       fetch("assessment.php", {  
         method: 'POST',
         body: formData
@@ -324,19 +333,31 @@
           alert('Assessment not found');
           return;
         }
-
+ 
         // assign the database values to the page attributes
-        document.querySelector('input[data-field="subject"]').value = assessment.subjectName;
+        document.querySelector('[data-field="subject"]').textContent = assessment.subjectName;
+        if(assessment.yearCode == 'Year1')
+          year = 'Y1';
+        else if(assessment.yearCode == 'Year2')
+          year = 'Y2';
+        else
+          year = 'Y3';
 
+        document.getElementById('BM').textContent = 'Bahasa Malaysia ' + year;
+        document.getElementById('BI').textContent = 'English ' + year;
+        document.getElementById('BC').textContent = 'Mandarin ' + year;
+        document.getElementById('MT').textContent = 'Mathematics ' + year;
+        document.getElementById('SC').textContent = 'Science ' + year;
+ 
         const semesterCode = parseInt(assessment.semesterCode.match(/\d/)[0]);  // trim the front part of sem code
         document.querySelector('[data-field="semester"]').textContent = semesterCode;
         document.querySelector('[data-field="description"]').value = assessment.description;
-
+ 
         // setup save btn
         const saveBtn = document.querySelector('.save');
         saveBtn.setAttribute('data-id', assessment.assessmentID); // set attribute for save btn
         saveBtn.addEventListener('click', saveAssessment)
-
+ 
         // setup cancel btn
         const cancelBtn = document.querySelector('.cancel');
         cancelBtn.setAttribute('data-id', assessment.assessmentID); // set attribute for cancel btn
@@ -354,17 +375,17 @@
     function saveAssessment()
     {
       const id = this.getAttribute('data-id');
-      const subject = document.querySelector('[data-field="subject"]').value;
+      const subject = document.getElementById('subject-id').value;
       const semester = document.getElementById('semester-id').value;
       const description = document.querySelector('[data-field="description"]').value;
-
+ 
       const formData = new FormData();
       formData.append('action', 'edit');
       formData.append('id', id);
       formData.append('subject', subject);
       formData.append('semester', semester);
       formData.append('description', description);
-
+ 
       fetch('assessment.php', {
         method: 'POST',
         body: formData
