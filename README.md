@@ -2,7 +2,11 @@
 
 **KinderWise** is a Kindergarten Assessment Management System that streamlines academic and administrative tasks by connecting administrators, principals, teachers, and parents through a unified platform.
 
-[![KinderWise Demo](kinderwise-thumbnail.png)](https://youtu.be/hmOp-aAPWQ8)
+<p align="center">
+  <a href="https://youtu.be/hmOp-aAPWQ8">
+    <img src="kinderwise-thumbnail.png" alt="KinderWise Demo" width="350">
+  </a>
+</p>
 ---
 
 ## 📌 Overview
